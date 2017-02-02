@@ -12,6 +12,8 @@ object Form1: TForm1
   Font.Style = []
   Menu = MainMenu
   OldCreateOrder = False
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 16
   object PageControl1: TPageControl
@@ -86,6 +88,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
+            OnChange = seChange
           end
         end
         object gbAxeFighter: TGroupBox
@@ -144,6 +147,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
+            OnChange = seChange
           end
         end
         object gbSwordFighter: TGroupBox
@@ -206,6 +210,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
+            OnChange = seChange
           end
         end
         object gbBowman: TGroupBox
@@ -265,6 +270,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
+            OnChange = seChange
           end
         end
         object gbCrossbowman: TGroupBox
@@ -326,6 +332,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
+            OnChange = seChange
           end
         end
         object gbLanceCarrier: TGroupBox
@@ -386,6 +393,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
+            OnChange = seChange
           end
         end
         object gbPikeman: TGroupBox
@@ -447,6 +455,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
+            OnChange = seChange
           end
         end
         object gbScout: TGroupBox
@@ -511,6 +520,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
+            OnChange = seChange
           end
         end
         object gbKnight: TGroupBox
@@ -577,6 +587,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
+            OnChange = seChange
           end
         end
       end

@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.StdCtrls,
-  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Samples.Spin;
+  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Samples.Spin,
+  CKR_Calculation;
 
 type
   TForm1 = class(TForm)
@@ -95,16 +96,50 @@ type
     lblIDRecruit: TLabel;
     imgRecruit: TImage;
     lblCountRecruit: TLabel;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure seChange(Sender: TObject);
   private
     { Private declarations }
+    CKR_Calc : TCKR_Calculation;
   public
     { Public declarations }
   end;
 
 var
   Form1: TForm1;
+
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  CKR_Calc := TCKR_Calculation.Create;
+end;
+
+procedure TForm1.FormDestroy(Sender: TObject);
+begin
+  CKR_Calc.Free;
+end;
+
+procedure TForm1.seChange(Sender: TObject);
+var SpinEdit : TSpinEdit;
+begin
+  SpinEdit := TSpinEdit(Sender);
+  CKR_Calc.SetCountArmy(TCKR_CTArmy(ord(SpinEdit.Tag)), SpinEdit.Value);
+  lblCountWoodenShields.Caption := IntToStr(CKR_Calc.GetCountRessource(trWoodenShields));
+  lblCountIronShields.Caption := IntToStr(CKR_Calc.GetCountRessource(trIronShields));
+  lblCountLeatherArmor.Caption := IntToStr(CKR_Calc.GetCountRessource(trLeatherArmor));
+  lblCountIronArmor.Caption := IntToStr(CKR_Calc.GetCountRessource(trIronArmor));
+  lblCountHandAxes.Caption := IntToStr(CKR_Calc.GetCountRessource(trHandAxes));
+  lblCountSwords.Caption := IntToStr(CKR_Calc.GetCountRessource(trSwords));
+  lblCountLances.Caption := IntToStr(CKR_Calc.GetCountRessource(trLances));
+  lblCountPikes.Caption := IntToStr(CKR_Calc.GetCountRessource(trPikes));
+  lblCountLongbows.Caption := IntToStr(CKR_Calc.GetCountRessource(trLongbows));
+  lblCountCrossbows.Caption := IntToStr(CKR_Calc.GetCountRessource(trCrossbows));
+  lblCountHorses.Caption := IntToStr(CKR_Calc.GetCountRessource(trHorses));
+  lblCountRecruit.Caption := IntToStr(CKR_Calc.GetCountRessource(Recruit));
+end;
 
 end.

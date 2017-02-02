@@ -51,6 +51,7 @@ procedure TCKR_Calculation.SetCountArmy(TypeArmy: TCKR_CTArmy;
   Count: Integer);
 begin
   ArmyCount[ord(TypeArmy)] := Count;
+  Refresh;
 end;
 
 function TCKR_Calculation.GetCountRessource(TypeRes: TCKR_CTRes): Integer;
