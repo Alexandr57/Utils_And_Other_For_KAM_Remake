@@ -22,25 +22,21 @@ object Form1: TForm1
     ActivePage = TabSheet1
     Align = alLeft
     TabOrder = 0
-    ExplicitHeight = 476
     object TabSheet1: TTabSheet
       Caption = 'Army'
-      ExplicitHeight = 445
       object ScrollBox1: TScrollBox
         Left = 0
         Top = 0
         Width = 249
         Height = 283
-        VertScrollBar.Position = 302
         Align = alClient
         BorderStyle = bsNone
         Color = clWindow
         ParentColor = False
         TabOrder = 0
-        ExplicitHeight = 445
         object gbMilitia: TGroupBox
           Left = 0
-          Top = -302
+          Top = 0
           Width = 232
           Height = 65
           Align = alTop
@@ -94,7 +90,7 @@ object Form1: TForm1
         end
         object gbAxeFighter: TGroupBox
           Left = 0
-          Top = -237
+          Top = 65
           Width = 232
           Height = 65
           Align = alTop
@@ -139,6 +135,7 @@ object Form1: TForm1
             ExplicitTop = 20
           end
           object seAxeFighter: TSpinEdit
+            Tag = 1
             Left = 48
             Top = 26
             Width = 169
@@ -151,7 +148,7 @@ object Form1: TForm1
         end
         object gbSwordFighter: TGroupBox
           Left = 0
-          Top = -172
+          Top = 130
           Width = 232
           Height = 65
           Align = alTop
@@ -200,6 +197,7 @@ object Form1: TForm1
             ExplicitTop = 20
           end
           object seSwordFighter: TSpinEdit
+            Tag = 2
             Left = 48
             Top = 26
             Width = 169
@@ -212,7 +210,7 @@ object Form1: TForm1
         end
         object gbBowman: TGroupBox
           Left = 0
-          Top = -107
+          Top = 195
           Width = 232
           Height = 65
           Align = alTop
@@ -255,10 +253,10 @@ object Form1: TForm1
               56331224285CFEF6F3AF70FD0594EAD86FB76507E50000000049454E44AE4260
               82}
             ShowHint = True
-            ExplicitLeft = 3
-            ExplicitTop = 17
+            ExplicitTop = 14
           end
           object seBowman: TSpinEdit
+            Tag = 3
             Left = 48
             Top = 26
             Width = 169
@@ -271,7 +269,7 @@ object Form1: TForm1
         end
         object gbCrossbowman: TGroupBox
           Left = 0
-          Top = -42
+          Top = 260
           Width = 232
           Height = 65
           Align = alTop
@@ -319,6 +317,7 @@ object Form1: TForm1
             ExplicitTop = 20
           end
           object seCrossbowman: TSpinEdit
+            Tag = 4
             Left = 48
             Top = 26
             Width = 169
@@ -331,7 +330,7 @@ object Form1: TForm1
         end
         object gbLanceCarrier: TGroupBox
           Left = 0
-          Top = 23
+          Top = 325
           Width = 232
           Height = 65
           Align = alTop
@@ -378,6 +377,7 @@ object Form1: TForm1
             ExplicitTop = 20
           end
           object seLanceCarrier: TSpinEdit
+            Tag = 5
             Left = 48
             Top = 26
             Width = 169
@@ -390,7 +390,7 @@ object Form1: TForm1
         end
         object gbPikeman: TGroupBox
           Left = 0
-          Top = 88
+          Top = 390
           Width = 232
           Height = 65
           Align = alTop
@@ -438,6 +438,7 @@ object Form1: TForm1
             ExplicitTop = 20
           end
           object sePikeman: TSpinEdit
+            Tag = 6
             Left = 48
             Top = 26
             Width = 169
@@ -450,7 +451,7 @@ object Form1: TForm1
         end
         object gbScout: TGroupBox
           Left = 0
-          Top = 153
+          Top = 455
           Width = 232
           Height = 65
           Align = alTop
@@ -501,6 +502,7 @@ object Form1: TForm1
             ExplicitTop = 20
           end
           object seScout: TSpinEdit
+            Tag = 7
             Left = 48
             Top = 26
             Width = 169
@@ -513,7 +515,7 @@ object Form1: TForm1
         end
         object gbKnight: TGroupBox
           Left = 0
-          Top = 218
+          Top = 520
           Width = 232
           Height = 65
           Align = alTop
@@ -529,41 +531,44 @@ object Form1: TForm1
             Center = True
             ParentShowHint = False
             Picture.Data = {
-              0954506E67496D61676589504E470D0A1A0A0000000D494844520000001B0000
-              001E0806000000DD1965E6000003694944415478DAB5953F4C5A5114C60F09C8
-              848B6F82C4C0A2A489B0C8625DCAD0A2839B264D74C2813018875A17E9020B76
-              61A930E8A4934E30485CE8022ED0414C1A74C185970EB8C8840CF67D07CFCB03
-              9F02D69EE5FEE1BEFBBBF73BDFB9583E6E7CA151A3B0977A907E30BA6919F63B
-              CBA830803AEBEB44A110D1C606D9547568E0EB604E27D1E222FDCE64C86FB5FE
-              5F185A0071AB51A41C0906502291239FCFD31D174ADCA65291A18043C3003A3F
-              BFA54060BC673E9FAF51B55AA79D9DA581C09160B9DC252D2DCDF0B8D3E990CD
-              66E33E6EFBE630B4B799059A88E475D8652C4033F132AF793398003B6761AA15
-              ABE4FD76CE30810F0D3316A984D987587716F5D2AC661000D0477CDAABE9EB65
-              2FB3EF2D56ABF50192249379D65DF2F21C0C2D20CE0907A9B72D067DDF54682B
-              D5D4D7C9B87F8F1E58B3A9BD06C1F7944E1F682E4BF162B35B47FD76F2B9158A
-              641B3CCE6CFB2992BCE07E78C145019FC26353D8F575876AB5AE85015C5959A6
-              B9B9095E30EF57E8C7AF3FDC7F3739C92F07C7E9291775C0EFA27048A15ADBAD
-              6F6ABFAD52A17A4FE58B460F50CF196A08450A29019F9AB2E927BD52DBF45903
-              CE1B80B6FD7DFE7D7BCD431EE738CD2EA74951149E2B95F27494DEA57CB1D193
-              7F1D06C0F171376F12626B013A1C769E773A880EF20DFD56902C168B5238BC49
-              272787B4B515E743240FEB94D0F2BBF3682053180C80C40386903A025451C668
-              55CB17E6000BFAC6F443AC7ECD719B8E7DD2D271CF077A02333A4DDC56C61354
-              6CF714ADA274DFC466B3CE2D603E27F10120653851E1F9E2C11CED1EA92C23BE
-              CF6AAE05D0B4A8CD1C88589877E9121AC7E2BE9F99AE121F2265FE6D68185E06
-              84BC0E92C35445651836436043B1FBB4678CE7AEEA9A13AB4D5E3734ACA24989
-              DC194F29921A61924F63C8ED07C2FAA514181C178FEF71ED89298C40B3180A26
-              40806A8D26D5EB6DBAB9B926B77B4ABF9559B45A6D2A5E3475179ABAD10C2456
-              47BD884C9047FA6AEB0D61284C0460D22F555B34EDB43F592FE07E18A2E70579
-              0926C5292F82D87D104CE2C9DBF8928CD8C46880E760901B07C3B30698E9FFD9
-              4B307161782DA86DD4A26CBECC4E848C3884EFB1AE24FE09267DC01CDA9F652A
-              95D59DA86A72857C8E1E90C88903BE0A26B7EB97B150EBE625E8551880F2401F
-              811CBF1A8610A0C02A9A5C77772DF2BA14BE25FA83607F01788B7C5C7AB780E7
-              0000000049454E44AE426082}
+              0954506E67496D61676589504E470D0A1A0A0000000D49484452000000190000
+              001F080600000012B0667E000003B94944415478DA95963F4C137114C71F493B
+              AA031D140C7F1C809058973631B4534D2C6568586401066D626A4DB003A60E18
+              1360C0B01413A103D501580A2642A285814EB44BBB581353182C24820EC7A04E
+              A62478DFDFF51D77D76B7BBC84DCEF7EBFFE7E9FF7BEEFF7DED1727F62922E63
+              99C5F8B92F126DB9CC9E16AB101C8EE7C141857A7AEC62CE2A4C8534F2106B95
+              B636A2A3A38BC9CE4EB29F9C5802098838A45221BBDD5EB349AC6D6C106D6F53
+              D2F5884221372593790A15DE8975FBF27253903508A2181A12109FCF4D998C02
+              F99648D01D9BCD3A646BEB2B0583B74D2178020479BCDE10EDED25D5772BB9D1
+              41D6D737696565CA14343BBB454E67B7F29EC98A673C1EBE5C4E002916CB3435
+              15D46DC45A2E774A6EF755DDC674BA64FAFB869044224792249942584AA3213A
+              CB10E36146089E5863430430002CE7A411449B93582C40F9FC1F19B24FA55251
+              E48421EC8C19500781649B9B2959EFB86EA3569E919100A552691145A1902397
+              6B405DE777234807C1219274A27A0828EA82DB88D10E0F0FA8ABAB478CBF9C9D
+              D1B51FDFD5773600759040205ABD3971D5EB52A924240410129D9E4AE29A8F07
+              0234B3B4409F6EDE127BBCF2DFAFDDCFB41A5FA295749A76E61588FFB94924D0
+              1D95CFC95E5A4A526F6F1F452221EA96CB84D77676B6C4FC6F19D23F3727E652
+              DD576447F669666691DC0E59DE980904AD05C6071973C15171142E979F7E0EDF
+              2359236847373EEED2DADA02F9FDC15A8831C1C253395C9F47060E28B9713A7B
+              45BE1832167DA268FE30ACDB979A8FD1E8E8333DC466B39D570320CA579F6E65
+              6CAF5E9CF1F1596A6D75A8170290C1B1417238BA6B20D3A1E15AB900A126168D
+              2604A09253C02F5F46A8AFAF973C9E80B84D5A99B15637279C97D344408C5BC3
+              E91A184B8848A7A72F40EDED4AE33C3E2E53369BA6EDD56DF586D58514E4B6E1
+              5F2CD15BF9EE3F95BF171C496C5C8638E5DF15895EAF287B9068AD211F7CB829
+              84413C6608121F0E5F543624814116A3C111189CC0184FD37F2400020005862F
+              9F160A0398416CD75FBD11F35A691185AEE2B500B488FE8E0EF1E5431740D141
+              2ECCEF3580B00300B0A47521F0F8711502A9B2D90CDD7DFF4244C610CE052ADC
+              086199B851D6CD8931E95AF9B4C93683C0B49DD8148243704BB4A6CD87168282
+              94A4B2F83D3B56B7D56B215C50A8748FC75773B3BCDE41DD1E40F2990CC5939B
+              02F46162B23984C7C8070C104EF461A1ACF62D06B06C7CA52D45C21E6BEB805B
+              C96A725DBC8F851E88830BD9A218C32059C3CFAF1904C62086A06548FFFE92CB
+              E3145161DC0CF21F3BD68E113F8F9A5C0000000049454E44AE426082}
             ShowHint = True
             ExplicitLeft = 10
             ExplicitTop = 20
           end
           object seKnight: TSpinEdit
+            Tag = 8
             Left = 48
             Top = 26
             Width = 169
@@ -588,9 +593,6 @@ object Form1: TForm1
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
-    ExplicitLeft = 259
-    ExplicitWidth = 488
-    ExplicitHeight = 476
     object pnlWoodenShields: TPanel
       Left = 16
       Top = 27
@@ -938,8 +940,7 @@ object Form1: TForm1
         Caption = 'ID: 21'
         ParentShowHint = False
         ShowHint = True
-        ExplicitLeft = 2
-        ExplicitTop = 0
+        ExplicitWidth = 35
       end
       object imgSwords: TImage
         Left = 1
@@ -1216,7 +1217,8 @@ object Form1: TForm1
           A6EEDC6334FAFE3F28BC055E4921547F5F13D1CF5CBB3EF40000000049454E44
           AE426082}
         ShowHint = True
-        ExplicitTop = 11
+        ExplicitLeft = 0
+        ExplicitTop = 23
       end
       object lblCountCrossbows: TLabel
         Left = 1

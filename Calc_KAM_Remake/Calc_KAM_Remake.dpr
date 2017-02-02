@@ -1,7 +1,8 @@
 program Calc_KAM_Remake;
 uses
   Vcl.Forms,
-  Unit1 in 'Unit1.pas' {Form1};
+  Unit1 in 'Unit1.pas' {Form1},
+  CKR_Calculation in 'CKR_Calculation.pas';
 
 {$R *.res}
 
