@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Calc KAM Remake'
-  ClientHeight = 314
-  ClientWidth = 513
+  ClientHeight = 304
+  ClientWidth = 591
   Color = clWindow
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,7 +20,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 257
-    Height = 314
+    Height = 304
     ActivePage = TabSheet1
     Align = alLeft
     TabOrder = 0
@@ -30,7 +30,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 249
-        Height = 283
+        Height = 273
         Align = alClient
         BorderStyle = bsNone
         Color = clWindow
@@ -88,7 +88,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
-            OnChange = seChange
+            OnChange = seResChange
           end
         end
         object gbAxeFighter: TGroupBox
@@ -147,7 +147,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
-            OnChange = seChange
+            OnChange = seResChange
           end
         end
         object gbSwordFighter: TGroupBox
@@ -210,7 +210,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
-            OnChange = seChange
+            OnChange = seResChange
           end
         end
         object gbBowman: TGroupBox
@@ -270,7 +270,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
-            OnChange = seChange
+            OnChange = seResChange
           end
         end
         object gbCrossbowman: TGroupBox
@@ -332,7 +332,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
-            OnChange = seChange
+            OnChange = seResChange
           end
         end
         object gbLanceCarrier: TGroupBox
@@ -393,7 +393,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
-            OnChange = seChange
+            OnChange = seResChange
           end
         end
         object gbPikeman: TGroupBox
@@ -455,7 +455,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
-            OnChange = seChange
+            OnChange = seResChange
           end
         end
         object gbScout: TGroupBox
@@ -520,7 +520,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
-            OnChange = seChange
+            OnChange = seResChange
           end
         end
         object gbKnight: TGroupBox
@@ -587,7 +587,7 @@ object Form1: TForm1
             MinValue = 0
             TabOrder = 0
             Value = 0
-            OnChange = seChange
+            OnChange = seResChange
           end
         end
       end
@@ -596,8 +596,8 @@ object Form1: TForm1
   object GroupBox1: TGroupBox
     Left = 257
     Top = 0
-    Width = 256
-    Height = 314
+    Width = 334
+    Height = 304
     Align = alClient
     Caption = 'Army = Ressource'
     Color = clWhite
@@ -607,27 +607,29 @@ object Form1: TForm1
     object pnlWoodenShields: TPanel
       Left = 16
       Top = 27
-      Width = 42
-      Height = 88
-      AutoSize = True
+      Width = 58
+      Height = 86
       TabOrder = 0
       object lblIDWoodenShields: TLabel
+        Tag = 16
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Wooden shields'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 16'
+        Caption = 'Type: 16'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgWoodenShields: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Wooden shields'
         Align = alTop
@@ -656,47 +658,54 @@ object Form1: TForm1
           95FF42925F4C0D7FE9C50000000049454E44AE426082}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountWoodenShields: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Wooden shields'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
+        OnClick = ClickGetCountRes
         ExplicitLeft = 9
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel1: TPanel
-      Left = 64
+    object pnlIronShields: TPanel
+      Left = 79
       Top = 27
-      Width = 42
-      Height = 88
-      AutoSize = True
+      Width = 58
+      Height = 86
       TabOrder = 1
       object lblIDIronShields: TLabel
+        Tag = 17
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Iron shields'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 17'
+        Caption = 'Type: 17'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgIronShields: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Iron shields'
         Align = alTop
@@ -721,47 +730,55 @@ object Form1: TForm1
           44AE426082}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountIronShields: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Iron shields'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
+        OnClick = ClickGetCountRes
         ExplicitLeft = 2
+        ExplicitTop = 58
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel2: TPanel
-      Left = 112
+    object pnlLeatherArmor: TPanel
+      Left = 142
       Top = 27
-      Width = 42
-      Height = 88
-      AutoSize = True
+      Width = 58
+      Height = 86
       TabOrder = 2
       object lblIDLeatherArmor: TLabel
+        Tag = 18
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Leather armor'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 18'
+        Caption = 'Type: 18'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgLeatherArmor: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Leather armor'
         Align = alTop
@@ -785,47 +802,54 @@ object Form1: TForm1
           82}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountLeatherArmor: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Leather armor'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
+        OnClick = ClickGetCountRes
         ExplicitLeft = 9
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel3: TPanel
-      Left = 159
+    object pnlIronArmor: TPanel
+      Left = 205
       Top = 27
-      Width = 42
-      Height = 88
-      AutoSize = True
+      Width = 58
+      Height = 86
       TabOrder = 3
       object lblIDIronArmor: TLabel
+        Tag = 19
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Iron armor'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 19'
+        Caption = 'Type: 19'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgIronArmor: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Iron armor'
         Align = alTop
@@ -854,47 +878,54 @@ object Form1: TForm1
           53FC032805300000000049454E44AE426082}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountIronArmor: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Iron armor'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
+        OnClick = ClickGetCountRes
         ExplicitLeft = 9
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel4: TPanel
-      Left = 207
+    object pnlHandAxes: TPanel
+      Left = 268
       Top = 27
-      Width = 42
-      Height = 88
-      AutoSize = True
+      Width = 58
+      Height = 86
       TabOrder = 4
       object lblIDHandAxes: TLabel
+        Tag = 20
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Hand axes'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 20'
+        Caption = 'Type: 20'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgHandAxes: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Hand axes'
         Align = alTop
@@ -916,47 +947,55 @@ object Form1: TForm1
           F3F57F9080B57392C3C6375686B23D8AB18EF50000000049454E44AE426082}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountHandAxes: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Hand axes'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
+        OnClick = ClickGetCountRes
         ExplicitLeft = 9
+        ExplicitTop = 58
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel5: TPanel
+    object pnlSwords: TPanel
       Left = 16
-      Top = 121
-      Width = 42
-      Height = 88
-      AutoSize = True
+      Top = 118
+      Width = 58
+      Height = 86
       TabOrder = 5
       object lblIDSwords: TLabel
+        Tag = 21
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Swords'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 21'
+        Caption = 'Type: 21'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgSwords: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Swords'
         Align = alTop
@@ -979,47 +1018,55 @@ object Form1: TForm1
           00000049454E44AE426082}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountSwords: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Swords'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
-        ExplicitLeft = 9
+        OnClick = ClickGetCountRes
+        ExplicitLeft = 3
+        ExplicitTop = 58
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel6: TPanel
-      Left = 64
-      Top = 121
-      Width = 42
-      Height = 88
-      AutoSize = True
+    object pnlLances: TPanel
+      Left = 79
+      Top = 118
+      Width = 58
+      Height = 86
       TabOrder = 6
       object lblIDLances: TLabel
+        Tag = 22
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Lances'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 22'
+        Caption = 'Type: 22'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgLances: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Lances'
         Align = alTop
@@ -1039,47 +1086,54 @@ object Form1: TForm1
           15E39C6B0000000049454E44AE426082}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountLances: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Lances'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
+        OnClick = ClickGetCountRes
         ExplicitLeft = 9
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel7: TPanel
-      Left = 112
-      Top = 121
-      Width = 42
-      Height = 88
-      AutoSize = True
+    object pnlPikes: TPanel
+      Left = 142
+      Top = 118
+      Width = 58
+      Height = 86
       TabOrder = 7
       object lblIDPikes: TLabel
+        Tag = 23
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Pikes'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 23'
+        Caption = 'Type: 23'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgPikes: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Pikes'
         Align = alTop
@@ -1104,47 +1158,54 @@ object Form1: TForm1
           00000049454E44AE426082}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountPikes: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Pikes'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
+        OnClick = ClickGetCountRes
         ExplicitLeft = 9
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel8: TPanel
-      Left = 159
-      Top = 121
-      Width = 42
-      Height = 88
-      AutoSize = True
+    object pnlLongbows: TPanel
+      Left = 204
+      Top = 118
+      Width = 58
+      Height = 86
       TabOrder = 8
       object lblIDLongbows: TLabel
+        Tag = 24
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Longbows'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 24'
+        Caption = 'Type: 24'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgLongbows: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Longbows'
         Align = alTop
@@ -1165,47 +1226,54 @@ object Form1: TForm1
           6850400300D237EA497C7046FC0000000049454E44AE426082}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountLongbows: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Longbows'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
+        OnClick = ClickGetCountRes
         ExplicitLeft = 9
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel9: TPanel
-      Left = 207
-      Top = 121
-      Width = 42
-      Height = 88
-      AutoSize = True
+    object pnlCrossbows: TPanel
+      Left = 269
+      Top = 118
+      Width = 58
+      Height = 86
       TabOrder = 9
       object lblIDCrossbows: TLabel
+        Tag = 25
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Crossbows'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 25'
+        Caption = 'Type: 25'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgCrossbows: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Crossbows'
         Align = alTop
@@ -1230,47 +1298,54 @@ object Form1: TForm1
         ShowHint = True
         ExplicitLeft = 0
         ExplicitTop = 23
+        ExplicitWidth = 40
       end
       object lblCountCrossbows: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Crossbows'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
+        OnClick = ClickGetCountRes
         ExplicitLeft = 9
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel10: TPanel
+    object pnlHorses: TPanel
       Left = 16
-      Top = 215
-      Width = 42
-      Height = 88
-      AutoSize = True
+      Top = 210
+      Width = 58
+      Height = 86
       TabOrder = 10
       object lblIDHorses: TLabel
+        Tag = 26
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Horses'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 26'
+        Caption = 'Type: 26'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgHorses: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Horses'
         Align = alTop
@@ -1302,47 +1377,54 @@ object Form1: TForm1
           5F57C7B4717F01C4C07C34E1FB30200000000049454E44AE426082}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountHorses: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Horses'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
+        OnClick = ClickGetCountRes
         ExplicitLeft = 9
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
-    object Panel11: TPanel
-      Left = 64
-      Top = 215
-      Width = 42
-      Height = 88
-      AutoSize = True
+    object pnlRecruit: TPanel
+      Left = 79
+      Top = 210
+      Width = 58
+      Height = 86
       TabOrder = 11
       object lblIDRecruit: TLabel
+        Tag = 13
         Left = 1
         Top = 1
-        Width = 40
+        Width = 56
         Height = 16
+        Cursor = crHandPoint
         Hint = 'Recruit'
         Align = alTop
         Alignment = taCenter
-        Caption = 'ID: 13'
+        Caption = 'Type: 13'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 35
+        OnClick = ClickGetTypeRes
+        ExplicitWidth = 51
       end
       object imgRecruit: TImage
         Left = 1
         Top = 17
-        Width = 40
+        Width = 56
         Height = 35
         Hint = 'Recruit'
         Align = alTop
@@ -1373,21 +1455,27 @@ object Form1: TForm1
           0000000049454E44AE426082}
         ShowHint = True
         ExplicitTop = 11
+        ExplicitWidth = 40
       end
       object lblCountRecruit: TLabel
         Left = 1
         Top = 52
-        Width = 40
-        Height = 35
+        Width = 56
+        Height = 33
+        Cursor = crHandPoint
         Hint = 'Recruit'
-        Align = alTop
+        Align = alClient
         Alignment = taCenter
         AutoSize = False
         Caption = '0'
         ParentShowHint = False
         ShowHint = True
         Layout = tlCenter
-        ExplicitLeft = 9
+        OnClick = ClickGetCountRes
+        ExplicitLeft = 17
+        ExplicitTop = 58
+        ExplicitWidth = 40
+        ExplicitHeight = 35
       end
     end
   end
@@ -1398,11 +1486,13 @@ object Form1: TForm1
       Caption = 'File'
       object Exit1: TMenuItem
         Caption = 'Exit'
+        OnClick = Exit1Click
       end
     end
     object Lunguage1: TMenuItem
       Caption = 'Lunguage'
       Enabled = False
+      Visible = False
       object Rus1: TMenuItem
         Caption = 'Rus'
       end
@@ -1412,6 +1502,14 @@ object Form1: TForm1
     end
     object About1: TMenuItem
       Caption = 'About'
+      OnClick = About1Click
     end
+  end
+  object tmr: TTimer
+    Enabled = False
+    Interval = 1500
+    OnTimer = tmrTimer
+    Left = 401
+    Top = 208
   end
 end

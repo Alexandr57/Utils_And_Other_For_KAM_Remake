@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.StdCtrls,
-  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Samples.Spin,
+  Vcl.Imaging.pngimage, Vcl.ExtCtrls, Vcl.Samples.Spin, Clipbrd,
+  About,
   CKR_Calculation;
 
 type
@@ -52,53 +53,59 @@ type
     imgPikeman: TImage;
     imgScout: TImage;
     imgKnight: TImage;
-    Panel1: TPanel;
+    pnlIronShields: TPanel;
     lblIDIronShields: TLabel;
     imgIronShields: TImage;
     lblCountIronShields: TLabel;
-    Panel2: TPanel;
+    pnlLeatherArmor: TPanel;
     lblIDLeatherArmor: TLabel;
     imgLeatherArmor: TImage;
     lblCountLeatherArmor: TLabel;
-    Panel3: TPanel;
+    pnlIronArmor: TPanel;
     lblIDIronArmor: TLabel;
     imgIronArmor: TImage;
     lblCountIronArmor: TLabel;
-    Panel4: TPanel;
+    pnlHandAxes: TPanel;
     lblIDHandAxes: TLabel;
     imgHandAxes: TImage;
     lblCountHandAxes: TLabel;
-    Panel5: TPanel;
+    pnlSwords: TPanel;
     lblIDSwords: TLabel;
     imgSwords: TImage;
     lblCountSwords: TLabel;
-    Panel6: TPanel;
+    pnlLances: TPanel;
     lblIDLances: TLabel;
     imgLances: TImage;
     lblCountLances: TLabel;
-    Panel7: TPanel;
+    pnlPikes: TPanel;
     lblIDPikes: TLabel;
     imgPikes: TImage;
     lblCountPikes: TLabel;
-    Panel8: TPanel;
+    pnlLongbows: TPanel;
     lblIDLongbows: TLabel;
     imgLongbows: TImage;
     lblCountLongbows: TLabel;
-    Panel9: TPanel;
+    pnlCrossbows: TPanel;
     lblIDCrossbows: TLabel;
     imgCrossbows: TImage;
     lblCountCrossbows: TLabel;
-    Panel10: TPanel;
+    pnlHorses: TPanel;
     lblIDHorses: TLabel;
     imgHorses: TImage;
     lblCountHorses: TLabel;
-    Panel11: TPanel;
+    pnlRecruit: TPanel;
     lblIDRecruit: TLabel;
     imgRecruit: TImage;
     lblCountRecruit: TLabel;
+    tmr: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure seChange(Sender: TObject);
+    procedure seResChange(Sender: TObject);
+    procedure ClickGetTypeRes(Sender: TObject);
+    procedure ClickGetCountRes(Sender: TObject);
+    procedure tmrTimer(Sender: TObject);
+    procedure Exit1Click(Sender: TObject);
+    procedure About1Click(Sender: TObject);
   private
     { Private declarations }
     CKR_Calc : TCKR_Calculation;
@@ -108,10 +115,39 @@ type
 
 var
   Form1: TForm1;
-
+  lblTmr : TLabel;
+  strlblTmrCopied : String;
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.About1Click(Sender: TObject);
+begin
+  Form2.ShowModal;
+end;
+
+procedure TForm1.ClickGetCountRes(Sender: TObject);
+begin
+  lblTmr := TLabel(Sender);
+  Clipboard.AsText := lblTmr.Caption;
+  strlblTmrCopied := lblTmr.Caption;
+  lblTmr.Caption := 'Copied!';
+  tmr.Enabled := true;
+end;
+
+procedure TForm1.ClickGetTypeRes(Sender: TObject);
+begin
+  lblTmr := TLabel(Sender);
+  Clipboard.AsText := IntToStr(lblTmr.Tag);
+  strlblTmrCopied := lblTmr.Caption;
+  lblTmr.Caption := 'Copied!';
+  tmr.Enabled := true;
+end;
+
+procedure TForm1.Exit1Click(Sender: TObject);
+begin
+  Close;
+end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
@@ -123,7 +159,7 @@ begin
   CKR_Calc.Free;
 end;
 
-procedure TForm1.seChange(Sender: TObject);
+procedure TForm1.seResChange(Sender: TObject);
 var SpinEdit : TSpinEdit;
 begin
   SpinEdit := TSpinEdit(Sender);
@@ -140,6 +176,12 @@ begin
   lblCountCrossbows.Caption := IntToStr(CKR_Calc.GetCountRessource(trCrossbows));
   lblCountHorses.Caption := IntToStr(CKR_Calc.GetCountRessource(trHorses));
   lblCountRecruit.Caption := IntToStr(CKR_Calc.GetCountRessource(Recruit));
+end;
+
+procedure TForm1.tmrTimer(Sender: TObject);
+begin
+  lblTmr.Caption := strlblTmrCopied;
+  tmr.Enabled := false;
 end;
 
 end.
