@@ -2,13 +2,13 @@ program CalcResourceKMR;
 
 uses
   Vcl.Forms,
-  UnitCalcResourceKMR in 'UnitCalcResourceKMR.pas' {Form1};
+  CalcResourceKMRUnit in 'CalcResourceKMRUnit.pas' {frmCalcResourceKMR};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TfrmCalcResourceKMR, frmCalcResourceKMR);
   Application.Run;
 end.
