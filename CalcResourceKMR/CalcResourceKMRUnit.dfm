@@ -4,8 +4,8 @@ object frmCalcResourceKMR: TfrmCalcResourceKMR
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'frmCalcResourceKMR'
-  ClientHeight = 476
-  ClientWidth = 696
+  ClientHeight = 478
+  ClientWidth = 780
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,29 +24,44 @@ object frmCalcResourceKMR: TfrmCalcResourceKMR
   object PageControl1: TPageControl
     Left = 8
     Top = 8
-    Width = 312
-    Height = 460
+    Width = 396
+    Height = 462
     ActivePage = tbsHouse
     Align = alLeft
     TabOrder = 0
-    ExplicitHeight = 652
     object tbsHouse: TTabSheet
-      Caption = 'House'
-      ExplicitLeft = 2
-      ExplicitHeight = 569
+      Caption = 'Houses'
+      object scrlbHouse: TScrollBox
+        Left = 0
+        Top = 0
+        Width = 388
+        Height = 431
+        Align = alClient
+        BorderStyle = bsNone
+        TabOrder = 0
+      end
+    end
+    object tbsUnit: TTabSheet
+      Caption = 'Units'
+      ImageIndex = 1
+      object scrlbUnit: TScrollBox
+        Left = 0
+        Top = 0
+        Width = 388
+        Height = 431
+        Align = alClient
+        BorderStyle = bsNone
+        TabOrder = 0
+      end
     end
   end
   object grbStorehouse: TGroupBox
-    Left = 320
+    Left = 404
     Top = 8
     Width = 368
-    Height = 460
+    Height = 462
     Align = alClient
     Caption = 'Storehouse'
     TabOrder = 1
-    ExplicitLeft = 488
-    ExplicitTop = 344
-    ExplicitWidth = 185
-    ExplicitHeight = 105
   end
 end
