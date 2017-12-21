@@ -50,6 +50,38 @@ type
 const
   COUNT_STOREHOUSE_RESOURCE = 29;
   ID_STOREHOUSE_RESOURCE    = 351;
+  HINT_STOREHOUSE_RESOURCE:Array[0..COUNT_STOREHOUSE_RESOURCE - 1] of String =
+  (
+    'Tree trunk',    //0
+    'Stone',         //1
+    'Timber',        //2
+    'Iron ore',      //3
+    'Gold ore',      //4
+    'Coal',          //5
+    'Iron',          //6
+    'Gold',          //7
+    'Wine',          //8
+    'Corn',          //9
+    'Loaves',        //10
+    'Flour',         //11
+    'Leather',       //12
+    'Sausages',      //13
+    'Pig',           //14
+    'Skin',          //15
+    'Wooden Shield', //16
+    'Long Shield',   //17
+    'Leather Armor', //18
+    'Iron Armament', //19
+    'Handaxe',       //20
+    'Longsword',     //21
+    'Lance',         //22
+    'Pike',          //23
+    'Longbow',       //24
+    'Crossbow',      //25
+    'Horse',         //26
+    'Fish',          //27
+    'Recruit'        //28
+  );
 
   COUNT_HOUSE               = 29;
   ID_HOUSE                  = 301;
@@ -120,6 +152,8 @@ begin
     imgStorehouseResource[I].Align          := alClient;
     imgStorehouseResource[I].Transparent    := True;
     imgStorehouseResource[I].Center         := True;
+    imgStorehouseResource[I].ShowHint       := True;
+    imgStorehouseResource[I].Hint           := HINT_STOREHOUSE_RESOURCE[I];
     imgStorehouseResource[I].Tag            := I;
 
     imgStorehouseResource[I].Picture.Bitmap.Canvas.Brush.Color := 0;
