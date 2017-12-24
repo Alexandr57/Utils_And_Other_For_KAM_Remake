@@ -2,7 +2,8 @@ program CalcResourceKMR;
 
 uses
   Vcl.Forms,
-  CalcResourceKMRUnit in 'CalcResourceKMRUnit.pas' {frmCalcResourceKMR};
+  CalcResourceKMRUnit in 'CalcResourceKMRUnit.pas' {frmCalcResourceKMR},
+  Versions in '..\General\Versions.pas';
 
 {$R *.res}
 

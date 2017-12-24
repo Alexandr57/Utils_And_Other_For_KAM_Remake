@@ -6,7 +6,7 @@ object frmCalcResourceKMR: TfrmCalcResourceKMR
   Caption = 'frmCalcResourceKMR'
   ClientHeight = 478
   ClientWidth = 780
-  Color = clBtnFace
+  Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -13
@@ -29,6 +29,7 @@ object frmCalcResourceKMR: TfrmCalcResourceKMR
     ActivePage = tbsHouse
     Align = alLeft
     TabOrder = 0
+    OnChange = PageControl1Change
     object tbsHouse: TTabSheet
       Caption = 'Houses'
       object scrlbHouse: TScrollBox

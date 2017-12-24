@@ -4,8 +4,9 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls,
-  KM_Defaults, KM_Pics, KM_ResPalettes, KM_ResSpritesEdit, Vcl.Samples.Spin;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Samples.Spin,
+  KM_Defaults, KM_Pics, KM_ResPalettes, KM_ResSpritesEdit,
+  Versions, Vcl.Buttons;
 
 type
   TfrmCalcResourceKMR = class(TForm)
@@ -16,6 +17,7 @@ type
     tbsUnit: TTabSheet;
     scrlbUnit: TScrollBox;
     procedure FormCreate(Sender: TObject);
+    procedure PageControl1Change(Sender: TObject);
   private
     fPalettes: TKMResPalettes;
     fSprites: TKMSpritePackEdit;
@@ -94,6 +96,15 @@ const
   ID_UNIT_2                 = 61;
   ID_UNIT_3                 = 79;
 
+  SHOW_VER_RELEASE          = True;
+  SHOW_VER_BUILD            = True;
+
+  PROJECT_VERSION           = 'Beta';
+
+  CLR_DIS_PNL: TColor       = $CCCCCC;
+
+  CLR_DIS_FNT: TColor       = $838383;
+
 var
   frmCalcResourceKMR: TfrmCalcResourceKMR;
   PathKAM: String;
@@ -113,7 +124,6 @@ begin
   SetLength(lblTypeStorehouseResource , COUNT_STOREHOUSE_RESOURCE);
   SetLength(lblCountStorehouseResource, COUNT_STOREHOUSE_RESOURCE);
   SetLength(imgStorehouseResource     , COUNT_STOREHOUSE_RESOURCE);
-
   for I := 0 to COUNT_STOREHOUSE_RESOURCE - 1 do
   begin
     COUNT_ST_RES[I]                          := 0;
@@ -123,38 +133,40 @@ begin
     else
       IDTag := I;
 
-    pnlStorehouseResource[I]                := TPanel.Create(grbStorehouse);
-    pnlStorehouseResource[I].Parent         := grbStorehouse;
-    pnlStorehouseResource[I].Width          := 64;
-    pnlStorehouseResource[I].Height         := 64;
-    pnlStorehouseResource[I].Left           := (I mod 5 * pnlStorehouseResource[I].Width) + 8 + ((I mod 5) * 8);
-    pnlStorehouseResource[I].Top            := ((I div 5) * pnlStorehouseResource[I].Height) + 28 + ((I div 5) * 8);
-    pnlStorehouseResource[I].Tag            := I;
+    pnlStorehouseResource[I]                 := TPanel.Create(grbStorehouse);
+    pnlStorehouseResource[I].Parent           := grbStorehouse;
+    pnlStorehouseResource[I].Width            := 64;
+    pnlStorehouseResource[I].Height           := 64;
+    pnlStorehouseResource[I].Left             := (I mod 5 * pnlStorehouseResource[I].Width) + 8 + ((I mod 5) * 8);
+    pnlStorehouseResource[I].Top              := ((I div 5) * pnlStorehouseResource[I].Height) + 28 + ((I div 5) * 8);
+    pnlStorehouseResource[I].ParentBackground := False;
+    pnlStorehouseResource[I].ParentColor      := False;
+    pnlStorehouseResource[I].Tag              := I;
 
-    lblTypeStorehouseResource[I]            := TLabel.Create(pnlStorehouseResource[I]);
-    lblTypeStorehouseResource[I].Parent     := pnlStorehouseResource[I];
-    lblTypeStorehouseResource[I].Align      := alTop;
-    lblTypeStorehouseResource[I].Alignment  := taCenter;
-    lblTypeStorehouseResource[I].Layout     := tlCenter;
-    lblTypeStorehouseResource[I].Caption    := 'Type: ' + IntToStr(IDTag);
-    lblTypeStorehouseResource[I].Tag        := I;
+    lblTypeStorehouseResource[I]              := TLabel.Create(pnlStorehouseResource[I]);
+    lblTypeStorehouseResource[I].Parent       := pnlStorehouseResource[I];
+    lblTypeStorehouseResource[I].Align        := alTop;
+    lblTypeStorehouseResource[I].Alignment    := taCenter;
+    lblTypeStorehouseResource[I].Layout       := tlCenter;
+    lblTypeStorehouseResource[I].Caption      := 'Type: ' + IntToStr(IDTag);
+    lblTypeStorehouseResource[I].Tag          := I;
 
-    lblCountStorehouseResource[I]           := TLabel.Create(pnlStorehouseResource[I]);
-    lblCountStorehouseResource[I].Parent    := pnlStorehouseResource[I];
-    lblCountStorehouseResource[I].Align     := alBottom;
-    lblCountStorehouseResource[I].Alignment := taCenter;
-    lblCountStorehouseResource[I].Layout    := tlCenter;
-    lblCountStorehouseResource[I].Caption   := '0';
-    lblCountStorehouseResource[I].Tag       := I;
+    lblCountStorehouseResource[I]             := TLabel.Create(pnlStorehouseResource[I]);
+    lblCountStorehouseResource[I].Parent      := pnlStorehouseResource[I];
+    lblCountStorehouseResource[I].Align       := alBottom;
+    lblCountStorehouseResource[I].Alignment   := taCenter;
+    lblCountStorehouseResource[I].Layout      := tlCenter;
+    lblCountStorehouseResource[I].Caption     := '0';
+    lblCountStorehouseResource[I].Tag         := I;
 
-    imgStorehouseResource[I]                := TImage.Create(pnlStorehouseResource[I]);
-    imgStorehouseResource[I].Parent         := pnlStorehouseResource[I];
-    imgStorehouseResource[I].Align          := alClient;
-    imgStorehouseResource[I].Transparent    := True;
-    imgStorehouseResource[I].Center         := True;
-    imgStorehouseResource[I].ShowHint       := True;
-    imgStorehouseResource[I].Hint           := HINT_STOREHOUSE_RESOURCE[I];
-    imgStorehouseResource[I].Tag            := I;
+    imgStorehouseResource[I]                  := TImage.Create(pnlStorehouseResource[I]);
+    imgStorehouseResource[I].Parent           := pnlStorehouseResource[I];
+    imgStorehouseResource[I].Align            := alClient;
+    imgStorehouseResource[I].Transparent      := True;
+    imgStorehouseResource[I].Center           := True;
+    imgStorehouseResource[I].ShowHint         := True;
+    imgStorehouseResource[I].Hint             := HINT_STOREHOUSE_RESOURCE[I];
+    imgStorehouseResource[I].Tag              := I;
 
     imgStorehouseResource[I].Picture.Bitmap.Canvas.Brush.Color := 0;
     imgStorehouseResource[I].Picture.Bitmap.Canvas.FillRect(imgStorehouseResource[I].Picture.Bitmap.Canvas.ClipRect);
@@ -658,10 +670,11 @@ end;
 procedure TfrmCalcResourceKMR.FormCreate(Sender: TObject);
 var
   RT: TRXType;
+  TextVersion: String;
 begin
   PathKAM := ExtractFilePath(ParamStr(0)) + '..\..\kam_remake\';
 
-  Caption := 'Calc Resource KMR (' + GAME_REVISION + ')';
+  Caption := 'Calc Resource KMR (' + GAME_REVISION + ')' + ' ' + PROJECT_VERSION + ' ' + GetMyVersion(SHOW_VER_RELEASE, SHOW_VER_BUILD);
 
   fPalettes := TKMResPalettes.Create;
   fPalettes.LoadPalettes(PathKAM + 'data\gfx\');
@@ -680,6 +693,66 @@ begin
   CreateUnits;
 
   bmpBase.Free;
+
+  PageControl1Change(nil);
+
+end;
+
+
+procedure TfrmCalcResourceKMR.PageControl1Change(Sender: TObject);
+var I: Integer;
+begin
+  case PageControl1.TabIndex of
+    0:
+    begin
+      pnlStorehouseResource[0].Enabled            := False;
+      pnlStorehouseResource[0].Color              := CLR_DIS_PNL;
+      lblTypeStorehouseResource[0].Font.Color     := CLR_DIS_FNT;
+      lblCountStorehouseResource[0].Font.Color    := CLR_DIS_FNT;
+      pnlStorehouseResource[1].Enabled            := True;
+      pnlStorehouseResource[1].Color              := Color;
+      lblTypeStorehouseResource[1].Font.Color     := Font.Color;
+      lblCountStorehouseResource[1].Font.Color    := Font.Color;
+      pnlStorehouseResource[2].Enabled            := True;
+      pnlStorehouseResource[2].Color              := Color;
+      lblTypeStorehouseResource[2].Font.Color     := Font.Color;
+      lblCountStorehouseResource[2].Font.Color    := Font.Color;
+
+      for I := 3 to 28 do
+      begin
+        pnlStorehouseResource[I].Enabled          := False;
+        pnlStorehouseResource[I].Color            := CLR_DIS_PNL;
+        lblTypeStorehouseResource[I].Font.Color   := CLR_DIS_FNT;
+        lblCountStorehouseResource[I].Font.Color  := CLR_DIS_FNT;
+      end;
+
+    end;
+    1:
+    Begin
+      for I := 0 to 15 do
+      begin
+        pnlStorehouseResource[I].Enabled          := False;
+        pnlStorehouseResource[I].Color            := CLR_DIS_PNL;
+        lblTypeStorehouseResource[I].Font.Color   := CLR_DIS_FNT;
+        lblCountStorehouseResource[I].Font.Color  := CLR_DIS_FNT;
+      end;
+
+      for I := 16 to 28 do
+      begin
+        pnlStorehouseResource[I].Enabled          := True;
+        pnlStorehouseResource[I].Color            := Color;
+        lblTypeStorehouseResource[I].Font.Color   := Font.Color;
+        lblCountStorehouseResource[I].Font.Color  := Font.Color;
+      end;
+
+      pnlStorehouseResource[27].Enabled           := False;
+      pnlStorehouseResource[27].Color             := CLR_DIS_PNL;
+      lblTypeStorehouseResource[27].Font.Color    := CLR_DIS_FNT;
+      lblCountStorehouseResource[27].Font.Color   := CLR_DIS_FNT;
+
+    End;
+  end;
+
 end;
 
 end.
