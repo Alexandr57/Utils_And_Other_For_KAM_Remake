@@ -65,4 +65,14 @@ object frmCalcResourceKMR: TfrmCalcResourceKMR
     Caption = 'Storehouse'
     TabOrder = 1
   end
+  object pnlInfo: TPanel
+    Left = 213
+    Top = -12
+    Width = 185
+    Height = 41
+    Caption = 'pnlInfo'
+    Color = clAqua
+    ParentBackground = False
+    TabOrder = 2
+  end
 end

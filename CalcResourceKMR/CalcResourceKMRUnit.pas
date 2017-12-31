@@ -16,9 +16,14 @@ type
     scrlbHouse: TScrollBox;
     tbsUnit: TTabSheet;
     scrlbUnit: TScrollBox;
+    pnlInfo: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
   private
+
+    lblInfoName:                                           TLabel;
+    lblType, lblTypeHint:                                  TLabel;
+
     fPalettes: TKMResPalettes;
     fSprites: TKMSpritePackEdit;
 
@@ -40,11 +45,14 @@ type
 
     procedure Events_speCountUnit_Change(Sender: TObject);
 
+    procedure CreateWindowInfo;
+
     procedure CreateStorehouseResource;
 
     procedure CreateHouse;
 
     procedure CreateUnits;
+
   public
     { Public declarations }
   end;
@@ -115,6 +123,43 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfrmCalcResourceKMR.CreateWindowInfo;
+begin
+  pnlInfo.Caption        := '';
+
+  pnlInfo.Left           := 16;
+  pnlInfo.Top            := 16;
+  pnlInfo.Width          := ClientWidth - 32;
+  pnlInfo.Height         := ClientHeight - 32;
+  pnlInfo.Padding.Left   := 8;
+  pnlInfo.Padding.Top    := 8;
+  pnlInfo.Padding.Right  := 8;
+  pnlInfo.Padding.Bottom := 8;
+
+  lblInfoName            := TLabel.Create(pnlInfo);
+  lblInfoName.Parent     := pnlInfo;
+  lblInfoName.Font       := Font;
+  lblInfoName.Font.Style := [fsBold];
+  lblInfoName.Align      := alTop;
+  lblInfoName.AutoSize   := False;
+  lblInfoName.Alignment  := taCenter;
+  lblInfoName.Layout     := tlCenter;
+  lblInfoName.Height     := 24;
+  lblInfoName.Caption    := 'No Select';
+
+  lblType                := TLabel.Create(pnlInfo);
+  lblType.Parent         := pnlInfo;
+  lblType.Font           := Font;
+  lblType.Font.Style     := [fsBold];
+  lblType.AutoSize       := False;
+  lblType.Alignment      := taCenter;
+  lblType.Layout         := tlCenter;
+  lblType.Left           := 8;
+  lblType.Top            := lblInfoName.Top + Height + 8;
+  lblType.
+end;
+
 
 procedure TfrmCalcResourceKMR.CreateStorehouseResource;
 var
@@ -683,6 +728,8 @@ begin
 
   fSprites := TKMSpritePackEdit.Create(RT, fPalettes);
   fSprites.LoadFromRXXFile(PathKAM + 'data\Sprites\GUI.rxx');
+
+  CreateWindowInfo;
 
   bmpBase := TBitmap.Create;
 
