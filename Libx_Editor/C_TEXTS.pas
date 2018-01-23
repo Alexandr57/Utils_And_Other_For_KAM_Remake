@@ -1,7 +1,17 @@
 unit C_TEXTS;
 interface
 
+uses KM_Defaults;
+
 const
+  PATH_TEXT  = 'data\text\text.%s' + EXT_FILE_LIBX_DOT;
+  PATH_CONST = 'KM_TextIDs.inc';
+
+  CMPPATH_1 = 'campaigns\';
+  CMPPATH_2 = '\text.%s' + EXT_FILE_LIBX_DOT;
+
+  LENGTH_NULL_CMP_TEXT = 6;
+
   LENGTH_FOLDERS_LIBX = 7;
 
   FOLDERS_LIBX_KMR_TEXT: Array[0..LENGTH_FOLDERS_LIBX - 1] of string =
@@ -46,7 +56,13 @@ const
 
   TEXT_INDEX_INFO_CMP     = 'INFO CAMPAIGN';
 
-  TEXT_INDEX_MISSION_CMP  = 'MISSION %s';
+  TEXT_INDEX_HEADER_CMP   = 'HEADER CAMPAIGN';
+
+  TEXT_INDEX_NULL_CMP     = 'NULL';
+
+  TEXT_INDEX_MISSION_CMP  = 'MISSION %d';
+
+  TEXT_INDEX = 'TEXT INDEX %d';
 
 implementation
 

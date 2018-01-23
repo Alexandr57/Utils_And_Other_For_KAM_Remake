@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{BC2F5CDA-9F85-46A0-8F7F-216F53886EBE}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Libx_Editor\LibxEditor.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="CalcResourceKMR\CalcResourceKMR.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="LibxEditor">
+        <MSBuild Projects="Libx_Editor\LibxEditor.dproj"/>
+    </Target>
+    <Target Name="LibxEditor:Clean">
+        <MSBuild Projects="Libx_Editor\LibxEditor.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LibxEditor:Make">
+        <MSBuild Projects="Libx_Editor\LibxEditor.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CalcResourceKMR">
+        <MSBuild Projects="CalcResourceKMR\CalcResourceKMR.dproj"/>
+    </Target>
+    <Target Name="CalcResourceKMR:Clean">
+        <MSBuild Projects="CalcResourceKMR\CalcResourceKMR.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CalcResourceKMR:Make">
+        <MSBuild Projects="CalcResourceKMR\CalcResourceKMR.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="LibxEditor;CalcResourceKMR"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="LibxEditor:Clean;CalcResourceKMR:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="LibxEditor:Make;CalcResourceKMR:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

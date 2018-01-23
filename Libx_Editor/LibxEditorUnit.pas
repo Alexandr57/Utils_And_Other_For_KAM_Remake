@@ -7,8 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, System.Actions, Vcl.ActnList, Vcl.Menus,
   Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.CheckLst, Vcl.ComCtrls,
   Vcl.ToolWin, System.ImageList, Vcl.ImgList, Masks,
-  C_TEXTS, TEXTS, Versions,
-  KM_Defaults, KM_ResLocales;
+  LoadFilesUnit, TEXTS, C_TEXTS, Versions,
+  KM_Defaults, KM_ResLocales, Vcl.Buttons;
 
 type
   TfrmLibxEditor = class(TForm)
@@ -31,70 +31,45 @@ type
     ImageList: TImageList;
     ToolButtonUpDown: TToolButton;
     ListBoxIndexLibx: TListBox;
-    Tab_2: TTabSheet;
-    pnlTab_2: TPanel;
+    Tab_3: TTabSheet;
+    pnlTab_3: TPanel;
     TabControl: TTabControl;
     MemoTextLibx: TMemo;
     lblMemoTextLibx: TLabel;
     Label1: TLabel;
     clbShowLang: TCheckListBox;
     pnlSelFiles: TPanel;
+    tmrFiles: TTimer;
+    Tab_2: TTabSheet;
+    GroupBox1: TGroupBox;
+    ToolBarFiles: TToolBar;
+    ImageListGRBFileButtonn: TImageList;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
     procedure aExitExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ToolButtonUpDownClick(Sender: TObject);
     procedure clbShowLangClickCheck(Sender: TObject);
     procedure ListBoxFilesClick(Sender: TObject);
+    procedure tmrFilesTimer(Sender: TObject);
     procedure CheckListBoxFoldersClickCheck(Sender: TObject);
   private
-
-    procedure InitFilesLibx;
-
+    procedure GetIDX(aFileID: Integer);
     function GetCharset(aLang: string): TFontCharset;
   public
-    fTextManager: TTextManager;
+    AddingFiles: Boolean;
   end;
 
 var
   frmLibxEditor: TfrmLibxEditor;
-  PathKAM: String;
+  PathKMR: String;
   ListFilesLibx:Array of TStringList;
+  aIDXLF: Integer = 0;
+  aIDXOLF: Integer = 0;
 
 implementation
 
 {$R *.dfm}
-
-
-procedure TfrmLibxEditor.InitFilesLibx;
-var
-  I: Integer;
-  B: Boolean;
-begin
-  ListBoxFiles.Clear;
-
-  fTextManager.Clear;
-
-  B := False;
-
-  for I := 0 to LENGTH_FOLDERS_LIBX - 1 do
-  begin
-    if CheckListBoxFolders.Checked[I] then
-    begin
-      fTextManager.AddPath(PathKAM, FOLDERS_LIBX_KMR[I], FOLDERS_LIBX_KMR_BOOL[I]);
-      B := True;
-    end;
-  end;
-
-  if fTextManager.Count <= 0 then
-    if B then
-    begin
-      ShowMessage('Error!! Count fPathManager = 0!!');
-      Application.Terminate;
-    end else Exit;
-
-  for I := 0 to fTextManager.Count - 1 do
-    ListBoxFiles.Items.Add(fTextManager.Paths[I]);
-
-end;
 
 
 function TfrmLibxEditor.GetCharset(aLang: string): TFontCharset;
@@ -113,18 +88,30 @@ begin
     Result := DEFAULT_CHARSET;
 end;
 
+
+procedure TfrmLibxEditor.GetIDX(aFileID: Integer);
+begin
+
+
+end;
+
+
 procedure TfrmLibxEditor.FormCreate(Sender: TObject);
 var I: Integer;
 begin
-  PathKAM := ExtractFilePath(ParamStr(0)) + '..\..\kam_remake\';
+  PathKMR := ExtractFilePath(ParamStr(0)) + '..\..\kam_remake\';
 
-  gResLocales := TKMLocales.Create(PathKAM + 'data\locales.txt', DEFAULT_LOCALE);
+  gResLocales := TKMLocales.Create(PathKMR + 'data\locales.txt', DEFAULT_LOCALE);
 
   if gResLocales.Count <= 0 then Application.Terminate;
 
   fTextManager := TTextManager.Create;
 
-
+  for I := 0 to LENGTH_FOLDERS_LIBX - 1 do
+  begin
+    CheckListBoxFolders.Items.Add(FOLDERS_LIBX_KMR_TEXT[I]);
+    CheckListBoxFolders.Checked[I] := True;
+  end;
 
   clbShowLang.Items.Add('All');
 
@@ -136,36 +123,52 @@ begin
       clbShowLang.ItemEnabled[I+1] := False;
   end;
 
-  for I := 0 to LENGTH_FOLDERS_LIBX - 1 do
+  frmLibxEditor.clbShowLangClickCheck(nil);
+
+  AddingFiles := False;
+end;
+
+
+procedure TfrmLibxEditor.tmrFilesTimer(Sender: TObject);
+begin
+  if aIDXLF = 0 then
   begin
-    CheckListBoxFolders.Items.Add(FOLDERS_LIBX_KMR_TEXT[I]);
-    CheckListBoxFolders.Checked[I] := True;
+    frmLoadFiles.Show;
+    inc(aIDXLF);
+  end else begin
+    case aIDXOLF of
+      0:frmLoadFiles.InitFilesLibx;
+      1:if ListBoxFiles.ItemIndex >= 0 then
+          frmLoadFiles.InitTextsLibx(ListBoxFiles.ItemIndex);
+    end;
+    tmrFiles.Enabled := False;
   end;
-
-  clbShowLangClickCheck(nil);
-
-  InitFilesLibx;
-
 end;
 
 
 procedure TfrmLibxEditor.ToolButtonUpDownClick(Sender: TObject);
 begin
-  if pnlIndexLibx.Height = 50 then
+  if pnlIndexLibx.Tag = 0 then
   begin
     pnlIndexLibx.Height         := 258;
     ListBoxIndexLibx.Visible    := True;
     ComboBoxIndexLibx.Visible   := False;
     ToolButtonUpDown.ImageIndex := 1;
+    pnlIndexLibx.Tag := 1;
+    TabControl.Top := pnlIndexLibx.Top + pnlIndexLibx.Height;
+    TabControl.Height := ClientHeight - (pnlIndexLibx.Top + pnlIndexLibx.Height);
     Exit;
   end;
 
-  if pnlIndexLibx.Height = 258 then
+  if pnlIndexLibx.Tag = 1 then
   begin
-    pnlIndexLibx.Height         := 50;
+    pnlIndexLibx.Height         := 58;
     ListBoxIndexLibx.Visible    := False;
     ComboBoxIndexLibx.Visible   := True;
     ToolButtonUpDown.ImageIndex := 0;
+    pnlIndexLibx.Tag := 0;
+    TabControl.Top := pnlIndexLibx.Top + pnlIndexLibx.Height;
+    TabControl.Height := ClientHeight - (pnlIndexLibx.Top + pnlIndexLibx.Height);
     Exit;
   end;
 
@@ -174,8 +177,12 @@ end;
 
 procedure TfrmLibxEditor.ListBoxFilesClick(Sender: TObject);
 begin
-  pnlSelFiles.Caption := Format(TEXT_SEL_FILE,
+  pnlSelFiles.Caption := PathKMR + Format(TEXT_SEL_FILE,
     [ListBoxFiles.Items.Strings[ListBoxFiles.ItemIndex]]);
+
+  aIDXLF := 0;
+  aIDXOLF := 1;
+  tmrFiles.Enabled := True;
 end;
 
 
@@ -228,7 +235,11 @@ end;
 
 procedure TfrmLibxEditor.CheckListBoxFoldersClickCheck(Sender: TObject);
 begin
-  InitFilesLibx;
+  if AddingFiles then Exit;
+
+  aIDXLF := 0;
+  aIDXOLF := 0;
+  tmrFiles.Enabled := True;
 end;
 
 
