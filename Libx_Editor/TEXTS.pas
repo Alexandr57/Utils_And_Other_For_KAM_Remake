@@ -132,6 +132,7 @@ begin
   try
     while FindResult = 0 do
     begin
+      //Application.ProcessMessages;
       if (SearchRec.Attr and faDirectory) <> 0 then
       begin
         if aScanSubFolders and (SearchRec.Name <> '.') and (SearchRec.Name <> '..') then
@@ -144,11 +145,10 @@ begin
         begin
           addFileMask := LeftStr( SearchRec.Name, Length(SearchRec.Name) - ( Length(EXT_FILE_LIBX_DOT) + Length(DEFAULT_LOCALE) ) ) +'%s' + EXT_FILE_LIBX_DOT;
           SubFolders  := aBasePath + aSubPath;
-          fPaths.Add(ExtractRelativePath(aBasePath, SubFolders) + addFileMask);
+          fPaths.Add(ExtractRelativePath(aBasePath, SubFolders + addFileMask));
           aAddedFiles.Text := aBasePath + aSubPath + addFileMask;
         end;
       end;
-      //Application.ProcessMessages;
       FindResult := FindNext(SearchRec);
     end;
   finally

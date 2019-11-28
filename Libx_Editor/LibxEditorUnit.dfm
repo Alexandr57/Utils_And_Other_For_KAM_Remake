@@ -13,41 +13,8 @@ object frmLibxEditor: TfrmLibxEditor
   Menu = mnMenu
   OldCreateOrder = False
   OnCreate = FormCreate
-  DesignSize = (
-    800
-    600)
   PixelsPerInch = 96
   TextHeight = 13
-  object TabControl: TTabControl
-    Left = 320
-    Top = 82
-    Width = 480
-    Height = 518
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    MultiLine = True
-    ScrollOpposite = True
-    TabOrder = 2
-    object lblMemoTextLibx: TLabel
-      Left = 4
-      Top = 6
-      Width = 472
-      Height = 16
-      Align = alTop
-      Alignment = taCenter
-      AutoSize = False
-      Caption = 'lblMemoTextLibx'
-      Layout = tlCenter
-      ExplicitWidth = 484
-    end
-    object MemoTextLibx: TMemo
-      Left = 4
-      Top = 22
-      Width = 472
-      Height = 492
-      Align = alClient
-      TabOrder = 0
-    end
-  end
   object pnlEdSelect: TPanel
     Left = 0
     Top = 24
@@ -109,9 +76,9 @@ object frmLibxEditor: TfrmLibxEditor
           end
           object GroupBoxFiles: TGroupBox
             Left = 8
-            Top = 161
+            Top = 182
             Width = 294
-            Height = 289
+            Height = 356
             Align = alClient
             Caption = 'Files'
             Padding.Left = 8
@@ -123,55 +90,27 @@ object frmLibxEditor: TfrmLibxEditor
               Left = 10
               Top = 23
               Width = 274
-              Height = 256
+              Height = 323
               Align = alClient
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
-              Font.Height = -13
+              Font.Height = -11
               Font.Name = 'Tahoma'
-              Font.Style = []
+              Font.Style = [fsBold]
+              ItemHeight = 13
               ParentFont = False
               TabOrder = 0
               OnClick = ListBoxFilesClick
-              ExplicitLeft = 11
-              ExplicitTop = 22
             end
           end
-          object GroupBox1: TGroupBox
+          object SearchBoxFiles: TSearchBox
             Left = 8
-            Top = 450
+            Top = 161
             Width = 294
-            Height = 88
-            Align = alBottom
-            Padding.Left = 8
-            Padding.Top = 8
-            Padding.Right = 8
-            Padding.Bottom = 8
+            Height = 21
+            Align = alTop
             TabOrder = 2
-            object ToolBarFiles: TToolBar
-              Left = 10
-              Top = 23
-              Width = 274
-              Height = 55
-              Align = alClient
-              ButtonHeight = 55
-              ButtonWidth = 55
-              Caption = 'ToolBarFiles'
-              Images = ImageListGRBFileButtonn
-              TabOrder = 0
-              object ToolButton1: TToolButton
-                Left = 0
-                Top = 0
-                Caption = 'ToolButton1'
-                ImageIndex = 0
-              end
-              object ToolButton2: TToolButton
-                Left = 55
-                Top = 0
-                Caption = 'ToolButton2'
-                ImageIndex = 1
-              end
-            end
+            OnInvokeSearch = SearchBoxFilesInvokeSearch
           end
         end
       end
@@ -223,83 +162,121 @@ object frmLibxEditor: TfrmLibxEditor
       end
     end
   end
-  object pnlIndexLibx: TPanel
-    Left = 320
-    Top = 24
-    Width = 480
-    Height = 58
-    Anchors = [akLeft, akTop, akRight]
-    Color = clHighlight
-    Padding.Left = 8
-    Padding.Top = 8
-    Padding.Right = 8
-    Padding.Bottom = 8
-    ParentBackground = False
-    TabOrder = 1
-    DesignSize = (
-      480
-      58)
-    object ComboBoxIndexLibx: TComboBox
-      Left = 9
-      Top = 9
-      Width = 414
-      Height = 24
-      Align = alCustom
-      Style = csDropDownList
-      Anchors = [akLeft, akTop, akRight]
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 0
-    end
-    object ToolBarUpDown: TToolBar
-      Left = 431
-      Top = 9
-      Width = 40
-      Height = 40
-      Align = alRight
-      ButtonHeight = 40
-      ButtonWidth = 40
-      Images = ImageList
-      TabOrder = 1
-      object ToolButtonUpDown: TToolButton
-        Left = 0
-        Top = 0
-        Cursor = crHandPoint
-        ImageIndex = 0
-        OnClick = ToolButtonUpDownClick
-      end
-    end
-    object ListBoxIndexLibx: TListBox
-      Left = 9
-      Top = 9
-      Width = 414
-      Height = 240
-      Anchors = [akLeft, akTop, akRight]
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 2
-      Visible = False
-    end
-  end
   object pnlSelFiles: TPanel
     Left = 0
     Top = 0
     Width = 800
     Height = 24
     Align = alTop
-    TabOrder = 3
+    TabOrder = 1
+  end
+  object pnlTexts: TPanel
+    Left = 320
+    Top = 24
+    Width = 480
+    Height = 576
+    Align = alClient
+    BevelOuter = bvNone
+    TabOrder = 2
+    object pnlIndexLibx: TPanel
+      Left = 0
+      Top = 0
+      Width = 480
+      Height = 58
+      Align = alTop
+      Color = clHighlight
+      FullRepaint = False
+      Padding.Left = 8
+      Padding.Top = 8
+      Padding.Right = 8
+      Padding.Bottom = 8
+      ParentBackground = False
+      TabOrder = 0
+      DesignSize = (
+        480
+        58)
+      object ComboBoxIndexLibx: TComboBox
+        Left = 9
+        Top = 9
+        Width = 414
+        Height = 24
+        Align = alCustom
+        Style = csDropDownList
+        Anchors = [akLeft, akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+      end
+      object ToolBarUpDown: TToolBar
+        Left = 431
+        Top = 9
+        Width = 40
+        Height = 40
+        Align = alRight
+        ButtonHeight = 40
+        ButtonWidth = 40
+        Images = ImageList
+        TabOrder = 1
+        object ToolButtonUpDown: TToolButton
+          Left = 0
+          Top = 0
+          Cursor = crHandPoint
+          ImageIndex = 0
+          OnClick = ToolButtonUpDownClick
+        end
+      end
+      object ListBoxIndexLibx: TListBox
+        Left = 9
+        Top = 9
+        Width = 414
+        Height = 240
+        Anchors = [akLeft, akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 2
+        Visible = False
+      end
+    end
+    object TabControl: TTabControl
+      Left = 0
+      Top = 58
+      Width = 480
+      Height = 518
+      Align = alClient
+      TabOrder = 1
+      object lblMemoTextLibx: TLabel
+        Left = 4
+        Top = 6
+        Width = 472
+        Height = 16
+        Align = alTop
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'lblMemoTextLibx'
+        Layout = tlCenter
+        ExplicitWidth = 484
+      end
+      object MemoTextLibx: TMemo
+        Left = 4
+        Top = 22
+        Width = 472
+        Height = 492
+        Align = alClient
+        TabOrder = 0
+      end
+    end
   end
   object mnMenu: TMainMenu
-    Left = 384
-    Top = 112
+    Left = 64
+    Top = 488
     object mnFile: TMenuItem
       Caption = 'File'
       object mnFile_Exit: TMenuItem
@@ -308,8 +285,8 @@ object frmLibxEditor: TfrmLibxEditor
     end
   end
   object ActionList: TActionList
-    Left = 432
-    Top = 112
+    Left = 112
+    Top = 488
     object aExit: TAction
       Category = 'File'
       Caption = 'Exit'
@@ -321,10 +298,10 @@ object frmLibxEditor: TfrmLibxEditor
     BkColor = clWhite
     Height = 32
     Width = 32
-    Left = 336
-    Top = 112
+    Left = 16
+    Top = 488
     Bitmap = {
-      494C010102004C00600020002000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
+      494C010102004C00040020002000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
       000000000000000000000000000000000000FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
@@ -862,18 +839,18 @@ object frmLibxEditor: TfrmLibxEditor
   object tmrFiles: TTimer
     Interval = 10
     OnTimer = tmrFilesTimer
-    Left = 480
-    Top = 114
+    Left = 160
+    Top = 490
   end
   object ImageListGRBFileButtonn: TImageList
     BlendColor = clWhite
     BkColor = clWhite
     Height = 48
     Width = 48
-    Left = 520
-    Top = 112
+    Left = 224
+    Top = 488
     Bitmap = {
-      494C010102006800880030003000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
+      494C010102006800040030003000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000C00000003000000001002000000000000090
       000000000000000000000000000000000000FFFFFF00FEFEFE00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FEFEFE00FFFFFF00F8F8F800FFFF

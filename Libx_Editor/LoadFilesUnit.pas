@@ -52,14 +52,11 @@ end;
 procedure TfrmLoadFiles.InitFilesLibx;
 var
   I: Integer;
-  B: Boolean;
 begin
 
   frmLibxEditor.ListBoxFiles.Clear;
 
   fTextManager.ClearFiles;
-
-  B := False;
 
   Caption := 'Scan Files';
 
@@ -69,17 +66,15 @@ begin
   begin
     if frmLibxEditor.CheckListBoxFolders.Checked[I] then
     begin
-      fTextManager.AddPath(PathKMR, FOLDERS_LIBX_KMR[I], MemoFiles, FOLDERS_LIBX_KMR_BOOL[I]);
-      B := True;
+      fTextManager.AddPath(PathKMR, FOLDERS_LIBX_KMR[I], MemoFiles, SCAN_SUB_FOLDERS_LIBX_KMR_BOOL[I]);
     end;
   end;
 
   if fTextManager.CountFiles <= 0 then
-    if B then
-    begin
-      ShowMessage('Error!! Count fPathManager = 0!!');
-      Application.Terminate;
-    end else Close;
+  begin
+    Close;
+    Exit;
+  end;
 
   for I := 0 to fTextManager.CountFiles - 1 do
     frmLibxEditor.ListBoxFiles.Items.Add(fTextManager.Paths[I]);

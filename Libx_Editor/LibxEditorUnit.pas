@@ -8,7 +8,7 @@ uses
   Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.CheckLst, Vcl.ComCtrls,
   Vcl.ToolWin, System.ImageList, Vcl.ImgList, Masks,
   LoadFilesUnit, TEXTS, C_TEXTS, Versions,
-  KM_Defaults, KM_ResLocales, Vcl.Buttons;
+  KM_Defaults, KM_ResLocales, Vcl.Buttons, Vcl.WinXCtrls;
 
 type
   TfrmLibxEditor = class(TForm)
@@ -41,11 +41,9 @@ type
     pnlSelFiles: TPanel;
     tmrFiles: TTimer;
     Tab_2: TTabSheet;
-    GroupBox1: TGroupBox;
-    ToolBarFiles: TToolBar;
     ImageListGRBFileButtonn: TImageList;
-    ToolButton1: TToolButton;
-    ToolButton2: TToolButton;
+    pnlTexts: TPanel;
+    SearchBoxFiles: TSearchBox;
     procedure aExitExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ToolButtonUpDownClick(Sender: TObject);
@@ -53,6 +51,7 @@ type
     procedure ListBoxFilesClick(Sender: TObject);
     procedure tmrFilesTimer(Sender: TObject);
     procedure CheckListBoxFoldersClickCheck(Sender: TObject);
+    procedure SearchBoxFilesInvokeSearch(Sender: TObject);
   private
     procedure GetIDX(aFileID: Integer);
     function GetCharset(aLang: string): TFontCharset;
@@ -136,11 +135,11 @@ begin
     frmLoadFiles.Show;
     inc(aIDXLF);
   end else begin
-    case aIDXOLF of
-      0:frmLoadFiles.InitFilesLibx;
-      1:if ListBoxFiles.ItemIndex >= 0 then
-          frmLoadFiles.InitTextsLibx(ListBoxFiles.ItemIndex);
-    end;
+    if aIDXOLF = 0 then
+      frmLoadFiles.InitFilesLibx
+    else
+      if ListBoxFiles.ItemIndex >= 0 then
+        frmLoadFiles.InitTextsLibx(ListBoxFiles.ItemIndex);
     tmrFiles.Enabled := False;
   end;
 end;
@@ -155,8 +154,8 @@ begin
     ComboBoxIndexLibx.Visible   := False;
     ToolButtonUpDown.ImageIndex := 1;
     pnlIndexLibx.Tag := 1;
-    TabControl.Top := pnlIndexLibx.Top + pnlIndexLibx.Height;
-    TabControl.Height := ClientHeight - (pnlIndexLibx.Top + pnlIndexLibx.Height);
+    //TabControl.Top := pnlIndexLibx.Top + pnlIndexLibx.Height;
+    //TabControl.Height := ClientHeight - (pnlIndexLibx.Top + pnlIndexLibx.Height);
     Exit;
   end;
 
@@ -167,24 +166,80 @@ begin
     ComboBoxIndexLibx.Visible   := True;
     ToolButtonUpDown.ImageIndex := 0;
     pnlIndexLibx.Tag := 0;
-    TabControl.Top := pnlIndexLibx.Top + pnlIndexLibx.Height;
-    TabControl.Height := ClientHeight - (pnlIndexLibx.Top + pnlIndexLibx.Height);
+    //TabControl.Top := pnlIndexLibx.Top + pnlIndexLibx.Height;
+    //TabControl.Height := ClientHeight - (pnlIndexLibx.Top + pnlIndexLibx.Height);
     Exit;
   end;
-
 end;
 
 
 procedure TfrmLibxEditor.ListBoxFilesClick(Sender: TObject);
 begin
-  pnlSelFiles.Caption := PathKMR + Format(TEXT_SEL_FILE,
-    [ListBoxFiles.Items.Strings[ListBoxFiles.ItemIndex]]);
+  if ListBoxFiles.ItemIndex < 0 then Exit;
+
+  pnlSelFiles.Caption := Format(TEXT_SEL_FILE,
+    [PathKMR + ListBoxFiles.Items.Strings[ListBoxFiles.ItemIndex]]);
 
   aIDXLF := 0;
   aIDXOLF := 1;
   tmrFiles.Enabled := True;
 end;
 
+
+procedure TfrmLibxEditor.SearchBoxFilesInvokeSearch(Sender: TObject);
+var
+  I: Integer;
+  idxPos: Integer;
+  strPos1, strPos2: String;
+  DblPos: Boolean;
+begin
+  if ListBoxFiles.Items.Count <= 0 then Exit;
+
+  DblPos := True;
+
+  if ListBoxFiles.ItemIndex < 0 then
+  begin
+    ListBoxFiles.ItemIndex := 0;
+    DblPos := False;
+  end else if ListBoxFiles.ItemIndex = 0 then
+    DblPos := False
+  else if ListBoxFiles.ItemIndex < ListBoxFiles.Items.Count - 1 then
+    ListBoxFiles.ItemIndex := ListBoxFiles.ItemIndex + 1
+  else begin
+    ListBoxFiles.ItemIndex := 0;
+    DblPos := False;
+  end;
+
+  idxPos := -1;
+
+  for I := ListBoxFiles.ItemIndex to ListBoxFiles.Items.Count - 1 do
+  begin
+    strPos1 := LowerCase(ListBoxFiles.Items[i]);
+    strPos2 := LowerCase(SearchBoxFiles.Text);
+    idxPos := Pos(strPos2, strPos1);
+    if idxPos <> 0 then
+    begin
+      ListBoxFiles.ItemIndex := I;
+      ListBoxFilesClick(ListBoxFiles);
+      Exit;
+    end;
+  end;
+
+  if DblPos = True then
+    for I := 0 to ListBoxFiles.Items.Count - 1 do
+    begin
+      strPos1 := LowerCase(ListBoxFiles.Items[i]);
+      strPos2 := LowerCase(SearchBoxFiles.Text);
+      idxPos := Pos(strPos2, strPos1);
+      if idxPos > 0 then
+      begin
+        ListBoxFiles.ItemIndex := I;
+        ListBoxFilesClick(ListBoxFiles);
+        Exit;
+      end;
+    end;
+
+end;
 
 procedure TfrmLibxEditor.clbShowLangClickCheck(Sender: TObject);
 var I, K: Integer;

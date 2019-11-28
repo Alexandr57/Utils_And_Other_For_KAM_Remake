@@ -1,4 +1,4 @@
-..\..\kam_remake\;
+..\..\kam_remake;
 ..\..\kam_remake\src\ext\;
 ..\..\kam_remake\src\ext\Overbyte ICS 8;
 ..\..\kam_remake\src\ext\pascalscript\Source;

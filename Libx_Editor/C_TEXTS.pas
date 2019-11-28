@@ -4,6 +4,8 @@ interface
 uses KM_Defaults;
 
 const
+  EXT_FILE_LIBX_DOT = '.libx';
+
   PATH_TEXT  = 'data\text\text.%s' + EXT_FILE_LIBX_DOT;
   PATH_CONST = 'KM_TextIDs.inc';
 
@@ -36,7 +38,7 @@ const
     'Campaigns\'
   );
 
-  FOLDERS_LIBX_KMR_BOOL: Array[0..LENGTH_FOLDERS_LIBX - 1] of boolean =
+  SCAN_SUB_FOLDERS_LIBX_KMR_BOOL: Array[0..LENGTH_FOLDERS_LIBX - 1] of boolean =
   (
     FALSE,
     TRUE,
