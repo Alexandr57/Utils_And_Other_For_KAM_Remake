@@ -277,110 +277,13 @@ end;
 
 
 procedure TTextManager.LoadText(TranslationID: integer; aCodePage: Word);
-var
-  TextPath: String;
-  SL: TStringList;
-  firstDelimiter, topId: Integer;
-  I, ID: Integer;
-  Line: string;
 begin
-  TextPath := Format(fTextPath, [gResLocales[TranslationID].Code]);
 
-  if not FileExists(TextPath) then Exit;
-
-  SL := TStringList.Create;
-  SL.Text := ReadTextU(TextPath, aCodePage);
-
-  for I := SL.Count - 1 downto 0 do
-  begin
-    firstDelimiter := Pos(':', SL[I]);
-    if firstDelimiter = 0 then Continue;
-
-    if TryStrToInt(LeftStr(SL[I], firstDelimiter - 1), topId) then
-      Break;
-  end;
-
-  if ConstCount > 0 then
-    fTextsTopId := ConstCount
-  else
-    fTextsTopId := topId +1;
-
-  SetLength(fTexts[TranslationID], fTextsTopId);
-
-  for I := 0 to SL.Count - 1 do
-  begin
-    Line := Trim(SL[I]);
-
-    firstDelimiter := Pos(':', Line);
-    if firstDelimiter = 0 then Continue;
-    if not TryStrToInt(TrimLeft(LeftStr(Line, firstDelimiter-1)), ID) then Continue;
-
-    Line := RightStr(Line, Length(Line) - firstDelimiter);
-    //Required characters that can't be stored in plain text
-    Line := StringReplace(Line, '\n', eol, [rfReplaceAll, rfIgnoreCase]); //EOL
-    Line := StringReplace(Line, '\\', '\', [rfReplaceAll, rfIgnoreCase]); //Slash
-
-    fTexts[TranslationID][ID] := Line;
-  end;
-
-  SL.Free;
 end;
 
 
 function TTextManager.Load(aBasePath: String; aIDFile: Integer; out aAddedFiles: TMemo): Boolean;
-var
-  I: Integer;
 begin
-  if CheckDataText(aIDFile) then
-  begin
-    fTextPath  := aBasePath + PATH_TEXT;
-    fConstPath := aBasePath + PATH_CONST;
-  end
-  else
-  begin
-    fTextPath  := aBasePath + Paths[aIDFile];
-    fConstPath := '';
-  end;
-
-  fTextsTopId := -1;
-
-  if CheckDataText(aIDFile) then
-    LoadConsts(aBasePath + PATH_CONST)
-  else
-    SetLength(fConsts, 0);
-
-  for I := 0 to gResLocales.Count - 1 do
-  begin
-    LoadText(I, gResLocales[I].FontCodepage);
-    aAddedFiles.Text := Format(fTextPath, [gResLocales[I].Code]);
-  end;
-
-  if ConstCount > 0 then Exit;
-
-  SetLength(fConsts, GetCount(gResLocales.IndexByCode(DEFAULT_LOCALE)));
-
-  if CheckCampaignText(aIDFile) then
-    for I := 0 to GetCount(gResLocales.IndexByCode(DEFAULT_LOCALE)) - 1 do
-    begin
-      case I of
-        0:fConsts[I].ConstName := TEXT_INDEX_NAME_CMP;
-        1:fConsts[I].ConstName := TEXT_INDEX_SNAME_CMP;
-        2:fConsts[I].ConstName := TEXT_INDEX_INFO_CMP;
-        3:fConsts[I].ConstName := TEXT_INDEX_HEADER_CMP;
-        else
-        if I >= 10 then
-          fConsts[I].ConstName := Format(TEXT_INDEX_MISSION_CMP, [I - 9])
-        else
-          fConsts[I].ConstName := TEXT_INDEX_NULL_CMP;
-      end;
-      fConsts[I].TextID := I;
-    end
-  else
-    for I := 0 to GetCount(gResLocales.IndexByCode(DEFAULT_LOCALE)) - 1 do
-    begin
-      fConsts[I].ConstName := Format(TEXT_INDEX, [I]);
-      fConsts[I].TextID := I;
-    end;
 
 end;
 

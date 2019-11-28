@@ -136,6 +136,7 @@ begin
   pnlInfo.Padding.Top    := 8;
   pnlInfo.Padding.Right  := 8;
   pnlInfo.Padding.Bottom := 8;
+  pnlInfo.Visible        := False;
 
   lblInfoName            := TLabel.Create(pnlInfo);
   lblInfoName.Parent     := pnlInfo;
@@ -157,7 +158,7 @@ begin
   lblType.Layout         := tlCenter;
   lblType.Left           := 8;
   lblType.Top            := lblInfoName.Top + Height + 8;
-  lblType.
+  //lblType.
 end;
 
 

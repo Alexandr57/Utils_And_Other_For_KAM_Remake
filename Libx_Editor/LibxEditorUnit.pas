@@ -44,6 +44,7 @@ type
     ImageListGRBFileButtonn: TImageList;
     pnlTexts: TPanel;
     SearchBoxFiles: TSearchBox;
+    Splitter1: TSplitter;
     procedure aExitExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ToolButtonUpDownClick(Sender: TObject);

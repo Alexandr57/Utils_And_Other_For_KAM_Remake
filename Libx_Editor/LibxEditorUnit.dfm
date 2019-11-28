@@ -15,6 +15,14 @@ object frmLibxEditor: TfrmLibxEditor
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 320
+    Top = 24
+    Height = 576
+    ExplicitLeft = 40
+    ExplicitTop = 96
+    ExplicitHeight = 100
+  end
   object pnlEdSelect: TPanel
     Left = 0
     Top = 24
@@ -171,17 +179,19 @@ object frmLibxEditor: TfrmLibxEditor
     TabOrder = 1
   end
   object pnlTexts: TPanel
-    Left = 320
+    Left = 323
     Top = 24
-    Width = 480
+    Width = 477
     Height = 576
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitLeft = 320
+    ExplicitWidth = 480
     object pnlIndexLibx: TPanel
       Left = 0
       Top = 0
-      Width = 480
+      Width = 477
       Height = 58
       Align = alTop
       Color = clHighlight
@@ -192,13 +202,14 @@ object frmLibxEditor: TfrmLibxEditor
       Padding.Bottom = 8
       ParentBackground = False
       TabOrder = 0
+      ExplicitWidth = 480
       DesignSize = (
-        480
+        477
         58)
       object ComboBoxIndexLibx: TComboBox
         Left = 9
         Top = 9
-        Width = 414
+        Width = 411
         Height = 24
         Align = alCustom
         Style = csDropDownList
@@ -210,9 +221,10 @@ object frmLibxEditor: TfrmLibxEditor
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitWidth = 414
       end
       object ToolBarUpDown: TToolBar
-        Left = 431
+        Left = 428
         Top = 9
         Width = 40
         Height = 40
@@ -221,6 +233,7 @@ object frmLibxEditor: TfrmLibxEditor
         ButtonWidth = 40
         Images = ImageList
         TabOrder = 1
+        ExplicitLeft = 431
         object ToolButtonUpDown: TToolButton
           Left = 0
           Top = 0
@@ -232,7 +245,7 @@ object frmLibxEditor: TfrmLibxEditor
       object ListBoxIndexLibx: TListBox
         Left = 9
         Top = 9
-        Width = 414
+        Width = 411
         Height = 240
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
@@ -243,19 +256,21 @@ object frmLibxEditor: TfrmLibxEditor
         ParentFont = False
         TabOrder = 2
         Visible = False
+        ExplicitWidth = 414
       end
     end
     object TabControl: TTabControl
       Left = 0
       Top = 58
-      Width = 480
+      Width = 477
       Height = 518
       Align = alClient
       TabOrder = 1
+      ExplicitWidth = 480
       object lblMemoTextLibx: TLabel
         Left = 4
         Top = 6
-        Width = 472
+        Width = 469
         Height = 16
         Align = alTop
         Alignment = taCenter
@@ -267,10 +282,11 @@ object frmLibxEditor: TfrmLibxEditor
       object MemoTextLibx: TMemo
         Left = 4
         Top = 22
-        Width = 472
+        Width = 469
         Height = 492
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 472
       end
     end
   end
