@@ -132,7 +132,6 @@ begin
   try
     while FindResult = 0 do
     begin
-      //Application.ProcessMessages;
       if (SearchRec.Attr and faDirectory) <> 0 then
       begin
         if aScanSubFolders and (SearchRec.Name <> '.') and (SearchRec.Name <> '..') then
@@ -147,6 +146,7 @@ begin
           SubFolders  := aBasePath + aSubPath;
           fPaths.Add(ExtractRelativePath(aBasePath, SubFolders + addFileMask));
           aAddedFiles.Text := aBasePath + aSubPath + addFileMask;
+          aAddedFiles.Repaint;
         end;
       end;
       FindResult := FindNext(SearchRec);

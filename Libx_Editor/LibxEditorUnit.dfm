@@ -186,8 +186,6 @@ object frmLibxEditor: TfrmLibxEditor
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitLeft = 320
-    ExplicitWidth = 480
     object pnlIndexLibx: TPanel
       Left = 0
       Top = 0
@@ -202,7 +200,6 @@ object frmLibxEditor: TfrmLibxEditor
       Padding.Bottom = 8
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 480
       DesignSize = (
         477
         58)
@@ -221,7 +218,6 @@ object frmLibxEditor: TfrmLibxEditor
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        ExplicitWidth = 414
       end
       object ToolBarUpDown: TToolBar
         Left = 428
@@ -233,7 +229,6 @@ object frmLibxEditor: TfrmLibxEditor
         ButtonWidth = 40
         Images = ImageList
         TabOrder = 1
-        ExplicitLeft = 431
         object ToolButtonUpDown: TToolButton
           Left = 0
           Top = 0
@@ -256,7 +251,6 @@ object frmLibxEditor: TfrmLibxEditor
         ParentFont = False
         TabOrder = 2
         Visible = False
-        ExplicitWidth = 414
       end
     end
     object TabControl: TTabControl
@@ -266,7 +260,6 @@ object frmLibxEditor: TfrmLibxEditor
       Height = 518
       Align = alClient
       TabOrder = 1
-      ExplicitWidth = 480
       object lblMemoTextLibx: TLabel
         Left = 4
         Top = 6
@@ -286,7 +279,8 @@ object frmLibxEditor: TfrmLibxEditor
         Height = 492
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 472
+        ExplicitLeft = 60
+        ExplicitTop = 70
       end
     end
   end
