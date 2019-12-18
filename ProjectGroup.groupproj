@@ -9,6 +9,9 @@
         <Projects Include="CalcResourceKMR\CalcResourceKMR.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="LFtoCRLF\LFtoCRLF.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="CalcResourceKMR:Make">
         <MSBuild Projects="CalcResourceKMR\CalcResourceKMR.dproj" Targets="Make"/>
     </Target>
+    <Target Name="LFtoCRLF">
+        <MSBuild Projects="LFtoCRLF\LFtoCRLF.dproj"/>
+    </Target>
+    <Target Name="LFtoCRLF:Clean">
+        <MSBuild Projects="LFtoCRLF\LFtoCRLF.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LFtoCRLF:Make">
+        <MSBuild Projects="LFtoCRLF\LFtoCRLF.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="LibxEditor;CalcResourceKMR"/>
+        <CallTarget Targets="LibxEditor;CalcResourceKMR;LFtoCRLF"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="LibxEditor:Clean;CalcResourceKMR:Clean"/>
+        <CallTarget Targets="LibxEditor:Clean;CalcResourceKMR:Clean;LFtoCRLF:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="LibxEditor:Make;CalcResourceKMR:Make"/>
+        <CallTarget Targets="LibxEditor:Make;CalcResourceKMR:Make;LFtoCRLF:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
