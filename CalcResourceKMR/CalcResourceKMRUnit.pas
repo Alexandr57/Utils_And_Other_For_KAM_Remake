@@ -19,6 +19,10 @@ type
     pnlInfo: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure PageControl1Change(Sender: TObject);
+    procedure scrlbHouseMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure scrlbUnitMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   private
 
     lblInfoName:                                           TLabel;
@@ -107,7 +111,7 @@ const
   SHOW_VER_RELEASE          = True;
   SHOW_VER_BUILD            = True;
 
-  PROJECT_VERSION           = 'Beta';
+  PROJECT_VERSION           = '';
 
   CLR_DIS_PNL: TColor       = $CCCCCC;
 
@@ -793,6 +797,11 @@ begin
         lblCountStorehouseResource[I].Font.Color  := Font.Color;
       end;
 
+      pnlStorehouseResource[7].Enabled          := True;
+      pnlStorehouseResource[7].Color            := Color;
+      lblTypeStorehouseResource[7].Font.Color   := Font.Color;
+      lblCountStorehouseResource[7].Font.Color  := Font.Color;
+
       pnlStorehouseResource[27].Enabled           := False;
       pnlStorehouseResource[27].Color             := CLR_DIS_PNL;
       lblTypeStorehouseResource[27].Font.Color    := CLR_DIS_FNT;
@@ -801,6 +810,22 @@ begin
     End;
   end;
 
+end;
+
+procedure TfrmCalcResourceKMR.scrlbHouseMouseWheel(Sender: TObject;
+  Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+  scrlbHouse.VertScrollBar.Position :=
+   scrlbHouse.VertScrollBar.Position - WheelDelta;
+end;
+
+procedure TfrmCalcResourceKMR.scrlbUnitMouseWheel(Sender: TObject;
+  Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+  scrlbUnit.VertScrollBar.Position :=
+   scrlbUnit.VertScrollBar.Position - WheelDelta;
 end;
 
 end.

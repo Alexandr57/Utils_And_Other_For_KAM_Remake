@@ -26,7 +26,7 @@ object frmCalcResourceKMR: TfrmCalcResourceKMR
     Top = 8
     Width = 396
     Height = 462
-    ActivePage = tbsHouse
+    ActivePage = tbsUnit
     Align = alLeft
     TabOrder = 0
     OnChange = PageControl1Change
@@ -40,6 +40,7 @@ object frmCalcResourceKMR: TfrmCalcResourceKMR
         Align = alClient
         BorderStyle = bsNone
         TabOrder = 0
+        OnMouseWheel = scrlbHouseMouseWheel
       end
     end
     object tbsUnit: TTabSheet
@@ -53,6 +54,7 @@ object frmCalcResourceKMR: TfrmCalcResourceKMR
         Align = alClient
         BorderStyle = bsNone
         TabOrder = 0
+        OnMouseWheel = scrlbUnitMouseWheel
       end
     end
   end
