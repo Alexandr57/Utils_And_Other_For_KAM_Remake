@@ -6,10 +6,13 @@
         <Projects Include="Libx_Editor\LibxEditor.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="CalcResourceKMR\CalcResourceKMR.dproj">
+        <Projects Include="CalcResourceKMR\Calc_Resource_KMR.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="LFtoCRLF\LFtoCRLF.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="LibxEditor\Libx_Editor.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -29,14 +32,14 @@
     <Target Name="LibxEditor:Make">
         <MSBuild Projects="Libx_Editor\LibxEditor.dproj" Targets="Make"/>
     </Target>
-    <Target Name="CalcResourceKMR">
-        <MSBuild Projects="CalcResourceKMR\CalcResourceKMR.dproj"/>
+    <Target Name="Calc_Resource_KMR">
+        <MSBuild Projects="CalcResourceKMR\Calc_Resource_KMR.dproj"/>
     </Target>
-    <Target Name="CalcResourceKMR:Clean">
-        <MSBuild Projects="CalcResourceKMR\CalcResourceKMR.dproj" Targets="Clean"/>
+    <Target Name="Calc_Resource_KMR:Clean">
+        <MSBuild Projects="CalcResourceKMR\Calc_Resource_KMR.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="CalcResourceKMR:Make">
-        <MSBuild Projects="CalcResourceKMR\CalcResourceKMR.dproj" Targets="Make"/>
+    <Target Name="Calc_Resource_KMR:Make">
+        <MSBuild Projects="CalcResourceKMR\Calc_Resource_KMR.dproj" Targets="Make"/>
     </Target>
     <Target Name="LFtoCRLF">
         <MSBuild Projects="LFtoCRLF\LFtoCRLF.dproj"/>
@@ -47,14 +50,23 @@
     <Target Name="LFtoCRLF:Make">
         <MSBuild Projects="LFtoCRLF\LFtoCRLF.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Libx_Editor">
+        <MSBuild Projects="LibxEditor\Libx_Editor.dproj"/>
+    </Target>
+    <Target Name="Libx_Editor:Clean">
+        <MSBuild Projects="LibxEditor\Libx_Editor.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Libx_Editor:Make">
+        <MSBuild Projects="LibxEditor\Libx_Editor.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="LibxEditor;CalcResourceKMR;LFtoCRLF"/>
+        <CallTarget Targets="LibxEditor;Calc_Resource_KMR;LFtoCRLF;Libx_Editor"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="LibxEditor:Clean;CalcResourceKMR:Clean;LFtoCRLF:Clean"/>
+        <CallTarget Targets="LibxEditor:Clean;Calc_Resource_KMR:Clean;LFtoCRLF:Clean;Libx_Editor:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="LibxEditor:Make;CalcResourceKMR:Make;LFtoCRLF:Make"/>
+        <CallTarget Targets="LibxEditor:Make;Calc_Resource_KMR:Make;LFtoCRLF:Make;Libx_Editor:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

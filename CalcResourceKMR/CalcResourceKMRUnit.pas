@@ -1,5 +1,6 @@
 unit CalcResourceKMRUnit;
 {$I ..\..\kam_remake\KaM_Remake.inc}
+{$I ..\General\Compiling.inc}
 interface
 
 uses
@@ -62,6 +63,9 @@ type
   end;
 
 const
+  SHOW_VER_RELEASE          = True;
+  SHOW_VER_BUILD            = False;
+
   COUNT_STOREHOUSE_RESOURCE = 29;
   ID_STOREHOUSE_RESOURCE    = 351;
   HINT_STOREHOUSE_RESOURCE:Array[0..COUNT_STOREHOUSE_RESOURCE - 1] of String =
@@ -107,9 +111,6 @@ const
   ID_UNIT_1                 = 141;
   ID_UNIT_2                 = 61;
   ID_UNIT_3                 = 79;
-
-  SHOW_VER_RELEASE          = True;
-  SHOW_VER_BUILD            = True;
 
   PROJECT_VERSION           = '';
 
@@ -721,8 +722,23 @@ procedure TfrmCalcResourceKMR.FormCreate(Sender: TObject);
 var
   RT: TRXType;
   TextVersion: String;
+  _IsPathKMR: Boolean;
 begin
-  PathKAM := ExtractFilePath(ParamStr(0)) + '..\..\kam_remake\';
+  {$IFDEF DEV}
+    PathKAM := ExtractFilePath(ParamStr(0)) + '..\..\kam_remake\';
+  {$ELSE}
+    PathKAM := ExtractFilePath(ParamStr(0));
+  {$ENDIF}
+
+  _IsPathKMR := (DirectoryExists(PathKAM + 'data\gfx') = false) or (FileExists(PathKAM + 'data\Sprites\GUI.rxx') = false) or (FileExists(PathKAM + 'KaM_Remake.exe') = false);
+
+  if _IsPathKMR then
+  begin
+    //MessageBox(Self.Handle, 'This folder does not exist!'#13#10'The application will be closed!', 'Error. Folder not found.', MB_OK +  MB_ICONERROR);
+    Application.Terminate;
+    Exit;
+  end;
+
 
   Caption := 'Calc Resource KMR (' + GAME_REVISION + ')' + ' ' + PROJECT_VERSION + ' ' + GetMyVersion(SHOW_VER_RELEASE, SHOW_VER_BUILD);
 

@@ -279,8 +279,6 @@ object frmLibxEditor: TfrmLibxEditor
         Height = 492
         Align = alClient
         TabOrder = 0
-        ExplicitLeft = 60
-        ExplicitTop = 70
       end
     end
   end
