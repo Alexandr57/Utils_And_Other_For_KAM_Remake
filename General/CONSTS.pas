@@ -1,6 +1,8 @@
 unit CONSTS;
 interface
 
+type TRunningUtils = (runuKMRCalc, runuKMROpCodes, runuKMRLibxEd);
+
 //---------------
 //Общие константы
 //---------------
@@ -13,9 +15,42 @@ const
   EXT_FILE_LIBX = 'libx';
   EXT_FILE_LIBX_DOT = '.' + EXT_FILE_LIBX;
 
-//--------------------------
-//Константы для  Libx Editor
-//--------------------------
+//-------------------------
+//Константы для KMR OpCodes
+//-------------------------
+
+type
+  TTypeScripts = (toConsts, toEvents, toActions, toStates, toUtils);
+
+const
+  FN_KMR_SCRIPT_EV = '..\..\kam_remake\src\scripting\KM_ScriptingEvents.pas';
+
+const
+  VAR_TYPE_NAME: array[0..41] of string = (
+    'Byte', 'Shortint', 'Smallint', 'Word', 'Integer', 'Cardinal', 'Single', 'Extended', 'Boolean', 'AnsiString', 'String',
+    'array of const', 'array of Boolean', 'array of String', 'array of AnsiString', 'array of Integer', 'array of Single', 'array of Extended',
+    'TKMHouseType', 'TKMWareType', 'TKMFieldType', 'TKMUnitType', 'TKMGroupOrder',
+    'TKMObjectiveStatus', 'TKMObjectiveType', 'TKMArmyType',
+    'TKMHouseFace', 'TKMTerrainTileBrief', 'TKMMissionDifficulty', 'TKMMissionDifficultySet',
+    'array of TKMTerrainTileBrief','TKMAudioFormat','TKMAIAttackTarget',
+    'TKMHouse', 'TKMUnit', 'TKMUnitGroup', 'TKMHandID', 'array of TKMHandID', // Werewolf types
+    'TKMPoint','TByteSet', 'TIntegerArray', 'TAnsiStringArray' // Werewolf types
+  );
+
+  VAR_TYPE_ALIAS: array[0..41] of string = (
+    'Byte', 'Shortint', 'Smallint', 'Word', 'Integer', 'Cardinal', 'Single', 'Extended', 'Boolean', 'AnsiString', 'String',
+    'array of const', 'array of Boolean', 'array of String', 'array of AnsiString', 'array of Integer', 'array of Single', 'array of Extended',
+    'TKMHouseType', 'TKMWareType', 'TKMFieldType', 'TKMUnitType', 'TKMGroupOrder',
+    'TKMObjectiveStatus', 'TKMObjectiveType', 'TKMArmyType',
+    'TKMHouseFace', 'TKMTerrainTileBrief', 'TKMMissionDifficulty', 'TKMMissionDifficultySet',
+    'array of TKMTerrainTileBrief','TKMAudioFormat','TKMAIAttackTarget',
+    'Integer', 'Integer', 'Integer', 'Integer', 'array of Integer', // Werewolf types
+    'TKMPoint','set of Byte', 'array of Integer', 'array of AnsiString' // Werewolf types
+  );
+
+//-------------------------
+//Константы для Libx Editor
+//-------------------------
 
 const
 

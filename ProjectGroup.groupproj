@@ -15,6 +15,9 @@
         <Projects Include="LibxEditor\Libx_Editor.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="KMROpCodes\KMR_OpCodes.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -59,14 +62,23 @@
     <Target Name="Libx_Editor:Make">
         <MSBuild Projects="LibxEditor\Libx_Editor.dproj" Targets="Make"/>
     </Target>
+    <Target Name="KMR_OpCodes">
+        <MSBuild Projects="KMROpCodes\KMR_OpCodes.dproj"/>
+    </Target>
+    <Target Name="KMR_OpCodes:Clean">
+        <MSBuild Projects="KMROpCodes\KMR_OpCodes.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="KMR_OpCodes:Make">
+        <MSBuild Projects="KMROpCodes\KMR_OpCodes.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="LibxEditor;Calc_Resource_KMR;LFtoCRLF;Libx_Editor"/>
+        <CallTarget Targets="LibxEditor;Calc_Resource_KMR;LFtoCRLF;Libx_Editor;KMR_OpCodes"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="LibxEditor:Clean;Calc_Resource_KMR:Clean;LFtoCRLF:Clean;Libx_Editor:Clean"/>
+        <CallTarget Targets="LibxEditor:Clean;Calc_Resource_KMR:Clean;LFtoCRLF:Clean;Libx_Editor:Clean;KMR_OpCodes:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="LibxEditor:Make;Calc_Resource_KMR:Make;LFtoCRLF:Make;Libx_Editor:Make"/>
+        <CallTarget Targets="LibxEditor:Make;Calc_Resource_KMR:Make;LFtoCRLF:Make;Libx_Editor:Make;KMR_OpCodes:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

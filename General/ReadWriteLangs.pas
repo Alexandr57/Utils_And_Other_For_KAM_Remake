@@ -6,10 +6,13 @@ uses IniFiles, SysUtils, CONSTS;
 type
   TUtilsLanguages=class
   private
-    fFileNameIni: String;
+  const
+    FN_INI = 'Languages.ini';
+  var
+    fRunningUtils: TRunningUtils;
     fIniFile: TMemIniFile;
   public
-    constructor Create(var aFileNameIni: String);
+    constructor Create(aRunningUtils: TRunningUtils);
     destructor Destroy; override;
 
     procedure CreateLineLangs;
@@ -25,15 +28,14 @@ implementation
 
 constructor TUtilsLanguages.Create(var aFileNameIni: String);
 begin
-  fFileNameIni := aFileNameIni;
-  fIniFile := TMemIniFile.Create(aFileNameIni);
+  fIniFile := TMemIniFile.Create(FN_INI);
   CreateLineLangs;
 end;
 
 
 procedure TUtilsLanguages.CreateLineLangs;
 begin
-  if FileExists(fFileNameIni) then Exit;
+  if FileExists(FN_INI) then Exit;
 
   //Russian
 
