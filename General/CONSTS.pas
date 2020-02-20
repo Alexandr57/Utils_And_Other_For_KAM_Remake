@@ -23,6 +23,7 @@ type
   TTypeScripts = (toConsts, toEvents, toActions, toStates, toUtils);
 
 const
+  FN_KMR_SCRIPT_CONST = '..\..\kam_remake\ScriptingPlugins\ScriptsLib\consts.script';
   FN_KMR_SCRIPT_EV = '..\..\kam_remake\src\scripting\KM_ScriptingEvents.pas';
 
 const

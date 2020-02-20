@@ -7,18 +7,27 @@ uses
   JsonDataObjects, CONSTS;
 
 type
+  TObjectScriptConstInfo = class
+    Version: AnsiString;
+    Name: AnsiString;
+    Description: AnsiString;
+    ScriptForParam: AnsiString;
+    AssignmentScript: AnsiString;
+    constructor Create(aVersion, aName, aScriptForParam: AnsiString);
+  end;
+
+type
   TObjectScriptEventInfo = class
   public
     Version: AnsiString;
     Name: AnsiString;
     Description: AnsiString;
     Script: AnsiString;
-
     constructor Create(aVersion, aName, aDescription, aScript: AnsiString);
   end;
 
 type
-  TVariableTypeName = (vtnByte, vtnShortint, vtnSmallint, vtnWord, vtnInteger,
+  TVariableTypeName = (vtnNull, vtnByte, vtnShortint, vtnSmallint, vtnWord, vtnInteger,
                        vtnCardinal, vtnSingle, vtnExtended, vtnBoolean,
                        vtnAnsiString, vtnString, vtnArrayOfConst, vtnArrayOfBoolean,
                        vtnArrayOfString, vtnArrayOfAnsiString, vtnArrayOfInteger,
@@ -30,11 +39,20 @@ type
                        vtnTKMAudioFormat, vtnTKMAIAttackTarget, vtnTKMPoint, vtnSetOfByte);
 
 type
+  TVariableInfo = record
+    VariableType: TVariableTypeName;
+    Desc: AnsiString;
+    Script: AnsiString;
+  end;
+
+type
   TObjectScriptActionsInfo = class
   public
     Version: AnsiString;
     Name: AnsiString;
     Description: AnsiString;
+    Params: Array of TVariableInfo;
+    Returns: TVariableTypeName;
     Script: AnsiString;
 
     constructor Create(aVersion, aName, aDescription, aScript: AnsiString);
@@ -44,9 +62,9 @@ type
   TScriptsKMR = class
   private
     fJsonObject: TJsonObject;
-    //fScriptConst
+    fScriptConst: TObjectList<TObjectScriptConstInfo>;
     fScriptEvents: TObjectList<TObjectScriptEventInfo>;
-    fScriptActions, fScriptStates, fScriptUtils: TStringList;
+    //fScriptActions, fScriptStates, fScriptUtils: TStringList;
 
     procedure ParseScript(aTypeScripts: TTypeScripts);
 
@@ -58,6 +76,19 @@ type
 
 implementation
 uses AL7_CommonUtils;
+
+{ TObjectScriptConst }
+
+
+constructor TObjectScriptConstInfo.Create(aVersion, aName, aScriptForParam: AnsiString);
+begin
+  Version := aVersion;
+  Name := aName;
+  Description := '';
+  ScriptForParam := aScriptForParam;
+  AssignmentScript := ':= ' + aScriptForParam + ';';
+end;
+
 
 { TObjectScriptEventInfo }
 
@@ -78,6 +109,7 @@ procedure TScriptsKMR.ParseScript(aTypeScripts: TTypeScripts);
 var
   ListScripts: TStringList;
   I, J: Integer;
+  astr: AnsiString;
   astrVer, astrName, astrDesc, astrScript: AnsiString;
 begin
   ListScripts := TStringList.Create;
@@ -86,6 +118,24 @@ begin
   astrName := '';
   astrScript := '';
   case aTypeScripts of
+    toConsts:
+    begin
+      ListScripts.LoadFromFile(ExtractFilePath(ParamStr(0)) + FN_KMR_SCRIPT_CONST);
+
+      for I := 0 to ListScripts.Count-1 do
+      begin
+        astrVer := 'r6720+';
+        if (Pos('=', ListScripts[i]) > 0) and (Pos(';', ListScripts[i]) > 0) then
+        begin
+          astr := ListScripts[i];
+          astr := StringReplace(astr, ' ', '', [rfReplaceAll]);
+          astr := StringReplace(astr, #9, '', [rfReplaceAll]);
+          astrName := StrSubstring(astr, 1, '=');
+          astrScript := astrName;
+          fScriptConst.Add(TObjectScriptConstInfo.Create(astrVer, astrName, astrScript));
+        end;
+      end;
+    end;
     toEvents:
     begin
       ListScripts.LoadFromFile(ExtractFilePath(ParamStr(0)) + FN_KMR_SCRIPT_EV);
@@ -120,7 +170,10 @@ begin
         end;
       end;
     end;
-    toActions: begin end;
+    toActions:
+    begin
+
+    end;
     toStates: begin end;
     toUtils: begin end;
   end;
@@ -129,22 +182,34 @@ end;
 
 procedure TScriptsKMR.WriteScriptsInJson(aFileJsonScripts: String);
 var
-  Item: TObjectScriptEventInfo;
+  ItemConst: TObjectScriptConstInfo;
+  ItemEvent: TObjectScriptEventInfo;
   childJsonObj1, childJsonObj2: TJsonObject;
-  eventsArray: TJSONArray;
+  objArray: TJSONArray;
 begin
   childJsonObj1 := fJsonObject.O['KMR_Scripts'];
-  eventsArray := TJSONArray.Create;
-  for Item in fScriptEvents do
+  objArray := TJSONArray.Create;
+  for ItemConst in fScriptConst do
   begin
     childJsonObj2 := TJsonObject.Create;
-    childJsonObj2.S['Version'] := Item.Version;
-    childJsonObj2.S['Name'] := Item.Name;
-    childJsonObj2.S['Description'] := Item.Description;
-    childJsonObj2.S['Script'] := Item.Script;
-    EventsArray.Add(childJsonObj2);
+    childJsonObj2.S['Version'] := ItemConst.Version;
+    childJsonObj2.S['Name'] := ItemConst.Name;
+    childJsonObj2.S['Description'] := ItemConst.Description;
+    childJsonObj2.S['ScriptForParam'] := ItemConst.ScriptForParam;
+    objArray.Add(childJsonObj2);
   end;
-  childJsonObj1.A['Events'] := EventsArray;
+  childJsonObj1.A['CONST'] := objArray;
+  objArray := TJSONArray.Create;
+  for ItemEvent in fScriptEvents do
+  begin
+    childJsonObj2 := TJsonObject.Create;
+    childJsonObj2.S['Version'] := ItemEvent.Version;
+    childJsonObj2.S['Name'] := ItemEvent.Name;
+    childJsonObj2.S['Description'] := ItemEvent.Description;
+    childJsonObj2.S['Script'] := ItemEvent.Script;
+    objArray.Add(childJsonObj2);
+  end;
+  childJsonObj1.A['Events'] := objArray;
   fJsonObject.SaveToFile(aFileJsonScripts, False);
 end;
 
@@ -154,6 +219,13 @@ var
   obj: TJsonObject;
 begin
   fJsonObject := TJsonObject.ParseFromFile(aFileJsonScripts) as TJsonObject;
+  for obj in fJsonObject.O['KMR_Scripts'].A['CONST'] do
+  begin
+    fScriptConst.Add(TObjectScriptConstInfo.Create(
+      obj.S['Version'],
+      obj.S['Name'],
+      obj.S['ScriptForParam']));
+  end;
   for obj in fJsonObject.O['KMR_Scripts'].A['Events'] do
   begin
     fScriptEvents.Add(TObjectScriptEventInfo.Create(
@@ -169,10 +241,12 @@ constructor TScriptsKMR.Create(aFileJsonScripts: String; aCreateJson: Boolean = 
 begin
   fJsonObject := TJsonObject.Create;
 
+  fScriptConst := TObjectList<TObjectScriptConstInfo>.Create();
   fScriptEvents := TObjectList<TObjectScriptEventInfo>.Create();
 
   if aCreateJson or not FileExists(aFileJsonScripts) then
   begin
+    ParseScript(toConsts);
     ParseScript(toEvents);
     WriteScriptsInJson(aFileJsonScripts);
   end else begin

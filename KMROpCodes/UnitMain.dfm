@@ -169,6 +169,8 @@ object FormMain: TFormMain
             ItemHeight = 19
             ParentFont = False
             TabOrder = 0
+            ExplicitLeft = 48
+            ExplicitTop = 48
           end
         end
         object TabSheetUtils: TTabSheet
@@ -195,10 +197,6 @@ object FormMain: TFormMain
     object TabSheetMainSettings: TTabSheet
       Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
   end
 end

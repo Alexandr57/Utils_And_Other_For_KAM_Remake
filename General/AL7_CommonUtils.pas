@@ -4,6 +4,7 @@ uses System.SysUtils;
 
 function StrSubstring(const aStr: AnsiString; aFrom, aLength: Integer): AnsiString; overload;
 function StrSubstring(const aStr: AnsiString; aFrom: Integer): AnsiString; overload;
+function StrSubstring(const aStr: AnsiString; aFrom: Integer; aToStr: AnsiString): AnsiString; overload;
 function StrSubstring(const aStr: AnsiString; aSubStr: AnsiString): AnsiString; overload;
 function StrSubstring(const aStr: AnsiString; aSubStr: AnsiString; aToStr: AnsiString): AnsiString; overload;
 function StrSubstringFromSubstring(const aStr: AnsiString; aSubStr: AnsiString): AnsiString; overload;
@@ -22,6 +23,15 @@ end;
 function StrSubstring(const aStr: AnsiString; aFrom: Integer): AnsiString;
 begin
   Result := StrSubstring(aStr, aFrom, Length(aStr));
+end;
+
+
+function StrSubstring(const aStr: AnsiString; aFrom: Integer; aToStr: AnsiString): AnsiString;
+var
+  posStr: Integer;
+begin
+  posStr := Pos(AnsiLowerCase(aToStr), AnsiLowerCase(aStr));
+  Result := StrSubstring(aStr, aFrom, posStr - aFrom);
 end;
 
 
