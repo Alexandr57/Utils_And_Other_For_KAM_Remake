@@ -25,6 +25,7 @@ type
 const
   FN_KMR_SCRIPT_CONST = '..\..\kam_remake\ScriptingPlugins\ScriptsLib\consts.script';
   FN_KMR_SCRIPT_EV = '..\..\kam_remake\src\scripting\KM_ScriptingEvents.pas';
+  FN_KMR_SCRIPT_A = '..\..\kam_remake\src\scripting\KM_ScriptingActions.pas';
 
 const
   VAR_TYPE_NAME: array[0..41] of string = (

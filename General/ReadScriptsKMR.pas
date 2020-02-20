@@ -7,27 +7,7 @@ uses
   JsonDataObjects, CONSTS;
 
 type
-  TObjectScriptConstInfo = class
-    Version: AnsiString;
-    Name: AnsiString;
-    Description: AnsiString;
-    ScriptForParam: AnsiString;
-    AssignmentScript: AnsiString;
-    constructor Create(aVersion, aName, aScriptForParam: AnsiString);
-  end;
-
-type
-  TObjectScriptEventInfo = class
-  public
-    Version: AnsiString;
-    Name: AnsiString;
-    Description: AnsiString;
-    Script: AnsiString;
-    constructor Create(aVersion, aName, aDescription, aScript: AnsiString);
-  end;
-
-type
-  TVariableTypeName = (vtnNull, vtnByte, vtnShortint, vtnSmallint, vtnWord, vtnInteger,
+  TVariableType = (vtnNull, vtnByte, vtnShortint, vtnSmallint, vtnWord, vtnInteger,
                        vtnCardinal, vtnSingle, vtnExtended, vtnBoolean,
                        vtnAnsiString, vtnString, vtnArrayOfConst, vtnArrayOfBoolean,
                        vtnArrayOfString, vtnArrayOfAnsiString, vtnArrayOfInteger,
@@ -38,24 +18,41 @@ type
                        vtnTKMMissionDifficultySet,vtnArrayOfTKMTerrainTileBrief,
                        vtnTKMAudioFormat, vtnTKMAIAttackTarget, vtnTKMPoint, vtnSetOfByte);
 
+//Script Const
+
 type
-  TVariableInfo = record
-    VariableType: TVariableTypeName;
-    Desc: AnsiString;
-    Script: AnsiString;
+  TObjectScriptConstInfo = class
+    Version: AnsiString;
+    Name: AnsiString;
+    Description: AnsiString;
+    ScriptForParam: AnsiString;
+    AssignmentScript: AnsiString;
+    constructor Create(aVersion, aName, aScriptForParam: AnsiString);
   end;
+
+//Script Event
+
+type
+  TObjectScriptEventInfo = class
+  public
+    Version: AnsiString;
+    Name: AnsiString;
+    Script: AnsiString;
+    constructor Create(aVersion, aName, aScript: AnsiString);
+  end;
+
+//Script Actions
 
 type
   TObjectScriptActionsInfo = class
   public
     Version: AnsiString;
     Name: AnsiString;
-    Description: AnsiString;
-    Params: Array of TVariableInfo;
-    Returns: TVariableTypeName;
+    Params: Array of AnsiString;
+    Returns: AnsiString;
     Script: AnsiString;
 
-    constructor Create(aVersion, aName, aDescription, aScript: AnsiString);
+    constructor Create(aVersion, aName, aReturns, aScript: AnsiString);
   end;
 
 type
@@ -77,6 +74,31 @@ type
 implementation
 uses AL7_CommonUtils;
 
+function TryParseEvents(aSL: TStringList; aIDStartLine: Integer;
+  out aIDEndLine: Integer;
+  out aOutVer, aOutName, aOutScript : AnsiString): Boolean;
+var
+  I: Integer;
+begin
+  if StartsText('//* Version:', aSL[aIDStartLine]) then
+  begin
+    aOutVer := 'r' + Trim(StrSubstringFromSubstring(aSL[aIDStartLine], '//* Version: '));
+    for I := aIDStartLine + 1 to aSL.Count - 1 do
+    begin
+      if Pos('procedure tkmscriptevents.proc', AnsiLowerCase(aSL[I])) >= 1 then
+      begin
+        aOutName := 'On' + StrSubstringFromSubstring(aSL[I], 'procedure TKMScriptEvents.Proc', '(');
+        aOutScript := '%sprocedure On' + StrSubstringFromSubstring(aSL[I], 'procedure TKMScriptEvents.Proc') + #13#10 + 'begin' + #13#10#9 + '%s' + #13#10 + 'end;';
+        aIDEndLine := I;
+        Result := True;
+        Exit;
+      end;
+    end;
+    Result := False;
+  end else
+    Result := False;
+end;
+
 { TObjectScriptConst }
 
 
@@ -93,11 +115,10 @@ end;
 { TObjectScriptEventInfo }
 
 
-constructor TObjectScriptEventInfo.Create(aVersion, aName, aDescription, aScript: AnsiString);
+constructor TObjectScriptEventInfo.Create(aVersion, aName, aScript: AnsiString);
 begin
   Version := aVersion;
   Name := aName;
-  Description := aDescription;
   Script := aScript;
 end;
 
@@ -139,39 +160,24 @@ begin
     toEvents:
     begin
       ListScripts.LoadFromFile(ExtractFilePath(ParamStr(0)) + FN_KMR_SCRIPT_EV);
-
-      for I := 0 to ListScripts.Count-1 do
+      I := 0;
+      while I < ListScripts.Count do
       begin
-        if StartsText('//* Version:', ListScripts[I]) then
-          astrVer := 'r' + Trim(StrSubstringFromSubstring(ListScripts[i], '//* Version: '));
-        if (StartsText('//* ', ListScripts[I])) and (Pos('version:', AnsiLowerCase(ListScripts[i])) < 1) then
-          if Length(astrDesc) > 0 then
-            astrDesc := astrDesc + #13#10 + '//' + StrSubstringFromSubstring(ListScripts[i], '//* ')
-          else
-            astrDesc := astrDesc + '//' + StrSubstringFromSubstring(ListScripts[i], '//* ');
-
-        if Pos('procedure tkmscriptevents.proc', AnsiLowerCase(ListScripts[i])) >= 1 then
+        if TryParseEvents(ListScripts, I, I, astrVer, astrName, astrScript) then
         begin
-          astrName := 'On' + StrSubstringFromSubstring(ListScripts[i], 'procedure TKMScriptEvents.Proc', '(');
-          astrScript := '%sprocedure On' + StrSubstringFromSubstring(ListScripts[i], 'procedure TKMScriptEvents.Proc') + #13#10 + 'begin' + #13#10#9 + '%s' + #13#10 + 'end;';
           for J := 0 to High(VAR_TYPE_NAME) do
             astrScript := StringReplace(astrScript, VAR_TYPE_NAME[J], VAR_TYPE_ALIAS[J], [rfReplaceAll, rfIgnoreCase]);
-        end;
-        if (Length(astrVer) > 0) and
-          (Length(astrName) > 0) and
-          (Length(astrDesc) > 0) and
-          (Length(astrScript) > 0) then
-        begin
-          fScriptEvents.Add(TObjectScriptEventInfo.Create(astrVer, astrName, astrDesc, astrScript));
-          astrDesc := '';
+          fScriptEvents.Add(TObjectScriptEventInfo.Create(astrVer, astrName, astrScript));
           astrVer := '';
           astrName := '';
           astrScript := '';
-        end;
+        end else
+          Inc(I);
       end;
     end;
     toActions:
     begin
+      ListScripts.LoadFromFile(ExtractFilePath(ParamStr(0)) + FN_KMR_SCRIPT_A);
 
     end;
     toStates: begin end;
@@ -205,7 +211,6 @@ begin
     childJsonObj2 := TJsonObject.Create;
     childJsonObj2.S['Version'] := ItemEvent.Version;
     childJsonObj2.S['Name'] := ItemEvent.Name;
-    childJsonObj2.S['Description'] := ItemEvent.Description;
     childJsonObj2.S['Script'] := ItemEvent.Script;
     objArray.Add(childJsonObj2);
   end;
@@ -231,7 +236,6 @@ begin
     fScriptEvents.Add(TObjectScriptEventInfo.Create(
       obj.S['Version'],
       obj.S['Name'],
-      obj.S['Description'],
       obj.S['Script']));
   end;
 end;
