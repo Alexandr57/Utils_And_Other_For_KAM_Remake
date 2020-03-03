@@ -93,7 +93,7 @@ object FormMain: TFormMain
         Top = 0
         Width = 472
         Height = 359
-        ActivePage = TabSheetStates
+        ActivePage = TabSheetConsts
         Align = alClient
         TabOrder = 0
         object TabSheetConsts: TTabSheet
@@ -169,8 +169,6 @@ object FormMain: TFormMain
             ItemHeight = 19
             ParentFont = False
             TabOrder = 0
-            ExplicitLeft = 48
-            ExplicitTop = 48
           end
         end
         object TabSheetUtils: TTabSheet

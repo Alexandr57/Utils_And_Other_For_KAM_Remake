@@ -7,16 +7,43 @@ uses
   JsonDataObjects, CONSTS;
 
 type
-  TVariableType = (vtnNull, vtnByte, vtnShortint, vtnSmallint, vtnWord, vtnInteger,
-                       vtnCardinal, vtnSingle, vtnExtended, vtnBoolean,
-                       vtnAnsiString, vtnString, vtnArrayOfConst, vtnArrayOfBoolean,
-                       vtnArrayOfString, vtnArrayOfAnsiString, vtnArrayOfInteger,
-                       vtnArrayOfSingle, vtnArrayOfExtended, vtnTKMHouseType,
-                       vtnTKMWareType, vtnTKMFieldType, vtnTKMUnitType, vtnTKMGroupOrder,
-                       vtnTKMObjectiveStatus, vtnTKMObjectiveType, vtnTKMArmyType,
-                       vtnTKMHouseFace, vtnTKMTerrainTileBrief, vtnTKMMissionDifficulty,
-                       vtnTKMMissionDifficultySet,vtnArrayOfTKMTerrainTileBrief,
-                       vtnTKMAudioFormat, vtnTKMAIAttackTarget, vtnTKMPoint, vtnSetOfByte);
+  TVariableType =
+  (vtnNull,
+  vtnByte,
+  vtnShortint,
+  vtnSmallint,
+  vtnWord,
+  vtnInteger,
+  vtnCardinal,
+  vtnSingle,
+  vtnExtended,
+  vtnBoolean,
+  vtnAnsiString,
+  vtnString,
+  vtnArrayOfConst,
+  vtnArrayOfBoolean,
+  vtnArrayOfString,
+  vtnArrayOfAnsiString,
+  vtnArrayOfInteger,
+  vtnArrayOfSingle,
+  vtnArrayOfExtended,
+  vtnTKMHouseType,
+  vtnTKMWareType,
+  vtnTKMFieldType,
+  vtnTKMUnitType,
+  vtnTKMGroupOrder,
+  vtnTKMObjectiveStatus,
+  vtnTKMObjectiveType,
+  vtnTKMArmyType,
+  vtnTKMHouseFace,
+  vtnTKMTerrainTileBrief,
+  vtnTKMMissionDifficulty,
+  vtnTKMMissionDifficultySet,
+  vtnArrayOfTKMTerrainTileBrief,
+  vtnTKMAudioFormat,
+  vtnTKMAIAttackTarget,
+  vtnTKMPoint,
+  vtnSetOfByte);
 
 //Script Const
 
@@ -48,11 +75,11 @@ type
   public
     Version: AnsiString;
     Name: AnsiString;
-    Params: Array of AnsiString;
-    Returns: AnsiString;
+    Params: Array of TVariableType;
+    Returns: TVariableType;
     Script: AnsiString;
 
-    constructor Create(aVersion, aName, aReturns, aScript: AnsiString);
+    constructor Create(aVersion, aName, aScript: AnsiString);
   end;
 
 type
@@ -74,6 +101,46 @@ type
 implementation
 uses AL7_CommonUtils;
 
+var
+  VariableTypeScript: Array of AnsiString
+  ('Byte',
+  'ShortInt',
+  'SmallInt',
+  'Word',
+  'Integer',
+  'Cardinal',
+  'Single',
+  'Extended',
+  'Boolean',
+  'AnsiString',
+  'String',
+  'Array%s Of Const',
+  'Array%s Of Boolean',
+  'Array%s Of String',
+  'Array%s Of AnsiString',
+  'Array%s Of Integer',
+  'Array%s Of Single',
+  'Array%s Of Extended',
+  'TKMHouseType',
+  'TKMWareType',
+  'TKMFieldType',
+  'TKMUnitType',
+  'TKMGroupOrder',
+  'TKMObjectiveStatus',
+  'TKMObjectiveType',
+  'TKMArmyType',
+  'TKMHouseFace',
+  'TKMTerrainTileBrief',
+  'TKMMissionDifficulty',
+  'TKMMissionDifficultySet',
+  'Array%s Of TKMTerrainTileBrief',
+  'TKMAudioFormat',
+  'TKMAIAttackTarget',
+  'TKMPoint',
+  'Set Of Byte');
+
+
+//Parsing Events Script
 function TryParseEvents(aSL: TStringList; aIDStartLine: Integer;
   out aIDEndLine: Integer;
   out aOutVer, aOutName, aOutScript : AnsiString): Boolean;
@@ -87,7 +154,10 @@ begin
     begin
       if Pos('procedure tkmscriptevents.proc', AnsiLowerCase(aSL[I])) >= 1 then
       begin
-        aOutName := 'On' + StrSubstringFromSubstring(aSL[I], 'procedure TKMScriptEvents.Proc', '(');
+        if Pos('(', AnsiLowerCase(aSL[I])) >= 1 then
+          aOutName := 'On' + StrSubstringFromSubstring(aSL[I], 'procedure TKMScriptEvents.Proc', '(')
+        else
+          aOutName := 'On' + StrSubstringFromSubstring(aSL[I], 'procedure TKMScriptEvents.Proc', ';');
         aOutScript := '%sprocedure On' + StrSubstringFromSubstring(aSL[I], 'procedure TKMScriptEvents.Proc') + #13#10 + 'begin' + #13#10#9 + '%s' + #13#10 + 'end;';
         aIDEndLine := I;
         Result := True;
@@ -98,6 +168,62 @@ begin
   end else
     Result := False;
 end;
+
+
+//Parsing Actions Script
+function TryParseActions(aSL: TStringList; aIDStartLine: Integer;
+  out aIDEndLine: Integer;
+  out aOutVer, aOutName, aOutScript : AnsiString;
+  out aOutParams: Array of TVariableType;
+  out aOutReturn: TVariableType): Boolean;
+var
+  I: Integer;
+  astrParams: AnsiString;
+  idParams: Integer;
+begin
+  if StartsText('//* Version:', aSL[aIDStartLine]) then
+  begin
+    aOutVer := 'r' + Trim(StrSubstringFromSubstring(aSL[aIDStartLine], '//* Version: '));
+    for I := aIDStartLine + 1 to aSL.Count - 1 do
+    begin
+      if Pos('tkmscriptactions.', AnsiLowerCase(aSL[I])) >= 1 then
+      begin
+        if (Pos('(', AnsiLowerCase(aSL[I])) >= 1) and (Pos(')', AnsiLowerCase(aSL[I])) >= 1) then
+        begin
+          aOutName := StrSubstringFromSubstring(aSL[I], 'tkmscriptactions.', '(');
+          astrParams := '(' + StrSubstringFromSubstring(aSL[I], '(', ')') + ')';
+        end else
+        begin
+          aOutName := StrSubstringFromSubstring(aSL[I], 'tkmscriptactions.', ';');
+          astrParams := '';
+        end;
+        aOutScript := '%s' +
+          StrSubstring(aSL[I], 1, 'tkmscriptactions.') +
+          StrSubstringFromSubstring(aSL[I], 'tkmscriptactions.', '(') + '(%s)' +
+          StrSubstringFromSubstring(aSL[I], ')');
+        aOutScript := TrimRight(aOutScript);
+        SetLength(aOutParams, 0);
+        if Length(astrParams) > 0 then
+        begin
+          idParams := 0;
+          while Pos(':', AnsiLowerCase(astrParams)) >= 1 do
+          begin
+            Inc(idParams);
+            SetLength(aOutParams, idParams);
+            aOutParams[idParams-1] := 
+          end;
+        end;
+        
+        aIDEndLine := I;
+        Result := True;
+        Exit;
+      end;
+    end;
+    Result := False;
+  end else
+    Result := False;
+end;
+
 
 { TObjectScriptConst }
 
